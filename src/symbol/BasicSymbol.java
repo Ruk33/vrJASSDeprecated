@@ -111,11 +111,13 @@ public abstract class BasicSymbol implements Symbol {
 
 	@Override
 	public Symbol define(Symbol symbol) {
-		if (!this.getChilds().containsKey(symbol.getName())) {
-			this.getChilds().put(symbol.getName(), new LinkedList<Symbol>());
+		if (symbol != null) {
+			if (!this.getChilds().containsKey(symbol.getName())) {
+				this.getChilds().put(symbol.getName(), new LinkedList<Symbol>());
+			}
+			
+			this.getChilds().get(symbol.getName()).add(symbol);
 		}
-		
-		this.getChilds().get(symbol.getName()).add(symbol);
 		
 		return this;
 	}

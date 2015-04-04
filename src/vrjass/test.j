@@ -1,9 +1,5 @@
-library a
-	globals
-		integer cd = 1
-	end
+library a requires b
+	function pepe takes nothing returns nothing
+		call hola(2, f(5, 8))
+	endfunction
 endlibrary
-
-function pepe takes nothing returns nothing
-	set cd = 2
-endfunction

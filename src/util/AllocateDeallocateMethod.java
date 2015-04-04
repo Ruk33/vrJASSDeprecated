@@ -1,16 +1,14 @@
 package util;
 
 import expression.BooleanExpression;
-import expression.IntegerBooleanExpression;
 import expression.IntegerExpression;
 import expression.MathExpression;
-import expression.NullBooleanExpression;
 import expression.VariableExpression;
 import expression.BooleanExpression.Operator;
 import expression.MathExpression.Operation;
+import statement.FunctionStatement;
 import statement.IfStatement;
 import statement.LocalVariableStatement;
-import statement.MethodStatement;
 import statement.ReturnStatement;
 import statement.SetVariableStatement;
 import symbol.ClassSymbol;
@@ -60,7 +58,7 @@ public class AllocateDeallocateMethod {
 	}
 	
 	public String toString() {
-		return new MethodStatement(this.allocateMethod).toJASS();
+		return new FunctionStatement(this.allocateMethod).toJASS();
 	}
 	
 	public static void main(String[] args) {

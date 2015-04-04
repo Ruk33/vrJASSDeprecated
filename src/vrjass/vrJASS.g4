@@ -1,162 +1,147 @@
 grammar vrJASS;
 
-inits 
-	:	libraryDef 
-	|	scopeDef
-	|	structDef 
-	|	functionDef	
-	|	globalDef
-	;
+/*
+ * Where everything begins
+ */
+inits:	libraryBlockStatement 
+	 |	scopeBlockStatement
+	 |	structBlockStatement
+	 |	functionStatement
+	 |	globalBlockStatement
+	 ;  
 	
-init : (inits (EOL inits)*)?;
+init: (inits (EOL inits)*)?;
 
-variableName : THIS | ID;
+/*
+ * Mini-helpers
+ */
+nonePublicPrivateVisibility: (PUBLIC | PRIVATE)?;
+publicPrivateProtectedVisiblity: PUBLIC | PRIVATE | PRIVATE;
+
 variableType : THISTYPE | ID;
 
-arrayVariableDef : variableType ARRAY variableName;
-variableDef : variableType variableName ('=' expr)?;
+/*
+ * Expression time
+ */
+argList : '(' exprList ')' | '(' ')';
+ 
+mathExpression: ('*'|'/'|'-'|'+') expr;
+functionExpression: ID argList;
+methodExpression: DOT functionExpression;
+variableArrayExpression: ID '[' expr ']';
+variableExpression: THIS | THISTYPE | ID;
+propertyExpression: DOT ID; 
+integerExpression: INTEGER;
+realExpression: REAL;
+stringExpression: STRING;
+booleanExpression: TRUE | FALSE;
+comparisonExpression: (EQUAL | NOT_EQUAL | GREATER_THAN | GREATER_THAN_OR_EQUAL_THAN | LOWER_THAN | LOWER_THAN_OR_EQUAL_THAN) expr;
+orExpression: OR expr;
+andExpression: AND expr;
+notExpression: NOT expr;
+parenthesisExpression: '(' expr ')';
+nullExpression: NULL;
 
-localArrayVariableDefStat : LOCAL arrayVariableDef;
-localVariableDefStat : LOCAL variableDef;
-
-variableAssignment : variableName ('[' intExpr ']')? ('=' | ASSERTDIV | ASSERTMINUS | ASSERTMULT | ASSERTPLUS) expr;
-variableAssignmentStat : SET variableAssignment;
-
-propertyAssignment : (variableName DOT) variableAssignment;
-propertyAssignmentStat : SET propertyAssignment;
-
-intExpr
-	:	intExpr ('*' | '/') intExpr
-	|	intExpr ('+' | '-') intExpr
-	|	(method | THIS | THISTYPE | ID) DOT expr
-	|	variableAssignment
-	|	method
-	|	function
-	|	INTEGER
-	|	THIS
-	|	'(' intExpr ')'
-	|	ID '[' intExpr ']'
-	|	ID
-	;	
-
-expr
-	:	expr ('*' | '/') expr
-	|	expr ('+' | '-') expr
-	|	(method | THIS | THISTYPE | ID) DOT expr
-	|	variableAssignment
-	|	method
-	|	function
-	|	INTEGER
-	|	REAL
-	|	STRING
-	|	THIS
-	|	THISTYPE
-	|	TRUE
-	|	FALSE
-	|	NULL
-	|	expr '!=' expr
-	|	expr '==' expr
-	|	expr '<=' expr
-	|	expr '>=' expr
-	|	expr '<' expr
-	|	expr '>' expr
-	|	expr OR expr
-	|	expr AND expr
-	|	NOT expr
-	|	'(' expr ')'
-	|	ID '[' intExpr ']'
-	|	ID
+expr:	mathExpression
+	|	functionExpression
+	|	expr methodExpression
+	|	integerExpression
+	|	realExpression
+	|	stringExpression
+	|	nullExpression
+	|	booleanExpression
+	|	expr comparisonExpression
+	|	expr orExpression
+	|	expr andExpression
+	|	notExpression
+	|	parenthesisExpression
+	|	expr propertyExpression
+	|	variableArrayExpression
+	|	variableExpression
 	;
 
 exprList : expr (',' expr)*;
 
-stat 
-	: expr 
-	| ifStat 
-	| whileStat 
-	| forStat 
-	| loopStat 
-	| returnStat 
-	| methodCall 
-	| functionCall
-	| localArrayVariableDefStat
-	| localVariableDefStat
-	| variableAssignmentStat
+/*
+ * Statement time
+ */
+debugStatement: DEBUG stat;
+
+elseIfStatement: ELSEIF '(' expr ')' (THEN)? EOL stat*;
+elseStatement: ELSE EOL stat*;
+ifStatement: IF '(' expr ')' (THEN)? EOL stat* (elseIfStatement)* (elseStatement)? (ENDIF | END);
+
+breakStatement: BREAK;
+continueStatement: CONTINUE;
+exitWhenStatement: EXITWHEN '(' expr ')';
+forStatement : FOR '(' expr ';' expr ';' expr ')' EOL stat* (ENDFOR | END); // <- are u sure that it can be three expressions?
+whileStatement : WHILE '(' expr ')' EOL stat* (ENDWHILE | END);
+loopStatement : LOOP '(' expr ')' EOL stat* (ENDLOOP | END);
+
+returnStatement : RETURN expr;
+
+functionCallStatement: CALL functionExpression;
+methodCallStatement: CALL expr methodExpression;
+
+variableStatement: variableType variableExpression ('=' expr)?;
+globalVariableStatement: nonePublicPrivateVisibility (CONSTANT)? variableStatement;
+localVariableArrayStatement: LOCAL variableType variableArrayExpression;
+localVariableStatement: LOCAL variableStatement;
+setVariableStatement: SET ((expr propertyExpression) | variableArrayExpression | variableExpression) '=' expr;
+
+propertyVisibility: (PUBLIC | PRIVATE | READONLY)?;
+propertyStatement: propertyVisibility (STATIC)? (CONSTANT)? variableStatement;
+
+stat: EOL
+	| expr
+	| ifStatement 
+	| whileStatement 
+	| forStatement 
+	| loopStatement 
+	| returnStatement 
+	| functionCallStatement 
+	| methodCallStatement
+	| localVariableArrayStatement
+	| localVariableStatement
+	| propertyExpression
+	| setVariableStatement
+	| debugStatement
 	;
 
-statBlock : (((DEBUG)? stat)? EOL)*;
-
-loopBlock : (((DEBUG)? stat | BREAK | CONTINUE | (DEBUG)? EXITWHEN '(' expr ')')? EOL)*;
-forStat : FOR '(' expr ')' EOL loopBlock (ENDFOR | END);
-whileStat : WHILE '(' expr ')' EOL loopBlock (ENDWHILE | END);
-loopStat : LOOP '(' expr ')' EOL loopBlock (ENDLOOP | END);
-
-ifStat 
-	:	IF '(' expr ')' (THEN)? EOL 
-			statBlock
-		(ELSEIF '(' expr ')' (THEN)? EOL
-			statBlock
-		)?
-		(ELSE EOL
-			statBlock
-		)?
-		(ENDIF | END)
-	;
-
-returnStat : RETURN expr;
+/*
+ * Block statements
+ */
+globalBlockStatement: GLOBAL EOL ((globalVariableStatement)? EOL)* (ENDGLOBAL | END);
 
 typeArgumentList : NOTHING | typeArgument (',' typeArgument)*;
-typeArgument : variableType ID;
+typeArgument : variableType variableExpression;
 
-argList : '(' exprList ')' | '(' ')';
-function : ID argList;
-method : (THISTYPE | THIS | ID) DOT function;
+functionStatement: nonePublicPrivateVisibility FUNCTION ID TAKES typeArgumentList RETURNS (ID | NOTHING) EOL stat* (ENDFUNCTION | END);
+methodStatement: nonePublicPrivateVisibility (STATIC | STUB)? METHOD ID TAKES typeArgumentList RETURNS (variableType | NOTHING) EOL stat* (ENDMETHOD | END);
 
-methodCall : CALL method;
-functionCall : CALL function;
-
-globalVariableDefStat : (PUBLIC | PRIVATE)? (CONSTANT)? variableDef;
-
-globalDef
-	:	GLOBAL EOL
-			((globalVariableDefStat)? EOL)*
-		(ENDGLOBAL | END)
-	;
-
-functionDef 
-	:	(PUBLIC | PRIVATE)? FUNCTION ID TAKES typeArgumentList RETURNS (ID | NOTHING) EOL 
-			statBlock
-		(ENDFUNCTION | END)
-	;
-
-methodDef
-	:	(PUBLIC | PRIVATE)? (STATIC | STUB)? METHOD ID TAKES typeArgumentList RETURNS (variableType | NOTHING) EOL
-			statBlock
-		(ENDMETHOD | END)
-	;
-
-propertyDef : (PUBLIC | PRIVATE | READONLY)? (STATIC)? (CONSTANT)? variableDef;
-
-structDef
-	:	(PUBLIC | PRIVATE)? STRUCT ID (EXTENDS ID)? EOL
-			((methodDef|propertyDef)? EOL)*
+structBlockStatement
+	:	nonePublicPrivateVisibility STRUCT ID (EXTENDS ID)? EOL
+			((methodStatement|propertyStatement)? EOL)*
 		(ENDSTRUCT | END)
 	;
 
-scopeDef
+scopeBlockStatement
 	:	SCOPE ID (INITIALIZER ID)? EOL
-			((structDef|functionDef|globalDef)? EOL)*
+			((structBlockStatement|functionStatement|globalBlockStatement)? EOL)*
 		(ENDSCOPE | END)
 	;
 
 requirementList : ID (',' ID)*;
-	
-libraryDef
+libraryBlockStatement
 	:	LIBRARY ID (INITIALIZER ID)? (REQUIRES requirementList)? EOL
-			((scopeDef|structDef|functionDef|globalDef)? EOL)*
+			((scopeBlockStatement|structBlockStatement|functionStatement|globalBlockStatement)? EOL)*
 		(ENDLIBRARY | END)
 	;
 
+/*
+ * 
+ */
+// Tired of endmethod, endfunction, ...? Me too 
 END : 'end';
 
 PRIVATE : 'private';
@@ -254,6 +239,13 @@ REAL : ('-')? INT '.' [0-9]* | '.' INT;
 RAWCODE : '\'' . . . . '\'' | '\'' . '\'';
 HEX : '0x' [0-9a-fA-F]+;
 INTEGER : ('-')? INT | HEX | RAWCODE;
+
+EQUAL : '==';
+NOT_EQUAL : '!=';
+GREATER_THAN : '>';
+GREATER_THAN_OR_EQUAL_THAN : '>=';
+LOWER_THAN : '<';
+LOWER_THAN_OR_EQUAL_THAN : '<=';
 
 INT : [0-9]+;
 EOL : [\r\n]+;

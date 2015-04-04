@@ -1,38 +1,23 @@
 package vrjass;
 
 import java.io.FileInputStream;
-
-import symbol.*;
-
 import java.io.InputStream;
+
+import listener.DefPhase;
+import listener.RefPhase;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import com.sun.org.apache.bcel.internal.classfile.LocalVariable;
+import util.ErrorBag;
 
 public class Test {
 
 	public static void main(String[] args) {
-		LimboSymbol limbo = new LimboSymbol();
-		
-		Symbol libraryA = new LibrarySymbol("A", limbo);
-			Symbol classRuke = new ClassSymbol("Ruke", Visibility.PUBLIC, libraryA);
-			
-			Symbol libraryPerson = new LibrarySymbol("AbstractTime", limbo);
-				Symbol classPerson = new ClassSymbol("Person", Visibility.PUBLIC, libraryPerson);
-		
-		limbo.getDependencyDefiner().add(libraryA, "AbstractTime", PrimitiveType.LIBRARY);
-		limbo.getDependencyDefiner().add(classRuke, "Person", PrimitiveType.CLASS);
-		limbo.getDependencyDefiner().defineAll();
-		 
-		System.out.println(limbo);
-		
-		/*
 		try {
-			InputStream is = new FileInputStream("c:/users/ruke/workspace/vrjass/src/ruke/test.j");
+			InputStream is = new FileInputStream("c:/users/ruke/workspace/vrjass/src/vrjass/test.j");
 			
 			// create a CharStream that reads from standard input
 			ANTLRInputStream input = new ANTLRInputStream(is);
@@ -55,14 +40,16 @@ public class Test {
 			
 			// Walk the tree created during the parse, trigger callbacks
 			walker.walk(def, tree);
+			def.defineAllDependencies();
 			
-			RefPhase ref = new RefPhase(def.getGlobalScope(), def.getScopes());
+			ErrorBag errorBag = new ErrorBag();
 			
-			walker.walk(ref, tree);
+			//walker.walk(new RefPhase(def.getParserTree(), errorBag), tree);
+			
+			//System.out.println(errorBag.getMessages());
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 		}
-		*/
 	}
 
 }

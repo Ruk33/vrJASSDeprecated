@@ -29,15 +29,25 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitInit(vrJASSParser.InitContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#variableName}.
+	 * Enter a parse tree produced by {@link vrJASSParser#nonePublicPrivateVisibility}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariableName(vrJASSParser.VariableNameContext ctx);
+	void enterNonePublicPrivateVisibility(vrJASSParser.NonePublicPrivateVisibilityContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#variableName}.
+	 * Exit a parse tree produced by {@link vrJASSParser#nonePublicPrivateVisibility}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariableName(vrJASSParser.VariableNameContext ctx);
+	void exitNonePublicPrivateVisibility(vrJASSParser.NonePublicPrivateVisibilityContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#publicPrivateProtectedVisiblity}.
+	 * @param ctx the parse tree
+	 */
+	void enterPublicPrivateProtectedVisiblity(vrJASSParser.PublicPrivateProtectedVisiblityContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#publicPrivateProtectedVisiblity}.
+	 * @param ctx the parse tree
+	 */
+	void exitPublicPrivateProtectedVisiblity(vrJASSParser.PublicPrivateProtectedVisiblityContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link vrJASSParser#variableType}.
 	 * @param ctx the parse tree
@@ -49,95 +59,175 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitVariableType(vrJASSParser.VariableTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#arrayVariableDef}.
+	 * Enter a parse tree produced by {@link vrJASSParser#argList}.
 	 * @param ctx the parse tree
 	 */
-	void enterArrayVariableDef(vrJASSParser.ArrayVariableDefContext ctx);
+	void enterArgList(vrJASSParser.ArgListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#arrayVariableDef}.
+	 * Exit a parse tree produced by {@link vrJASSParser#argList}.
 	 * @param ctx the parse tree
 	 */
-	void exitArrayVariableDef(vrJASSParser.ArrayVariableDefContext ctx);
+	void exitArgList(vrJASSParser.ArgListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#variableDef}.
+	 * Enter a parse tree produced by {@link vrJASSParser#mathExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariableDef(vrJASSParser.VariableDefContext ctx);
+	void enterMathExpression(vrJASSParser.MathExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#variableDef}.
+	 * Exit a parse tree produced by {@link vrJASSParser#mathExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariableDef(vrJASSParser.VariableDefContext ctx);
+	void exitMathExpression(vrJASSParser.MathExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#localArrayVariableDefStat}.
+	 * Enter a parse tree produced by {@link vrJASSParser#functionExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterLocalArrayVariableDefStat(vrJASSParser.LocalArrayVariableDefStatContext ctx);
+	void enterFunctionExpression(vrJASSParser.FunctionExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#localArrayVariableDefStat}.
+	 * Exit a parse tree produced by {@link vrJASSParser#functionExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitLocalArrayVariableDefStat(vrJASSParser.LocalArrayVariableDefStatContext ctx);
+	void exitFunctionExpression(vrJASSParser.FunctionExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#localVariableDefStat}.
+	 * Enter a parse tree produced by {@link vrJASSParser#methodExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterLocalVariableDefStat(vrJASSParser.LocalVariableDefStatContext ctx);
+	void enterMethodExpression(vrJASSParser.MethodExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#localVariableDefStat}.
+	 * Exit a parse tree produced by {@link vrJASSParser#methodExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitLocalVariableDefStat(vrJASSParser.LocalVariableDefStatContext ctx);
+	void exitMethodExpression(vrJASSParser.MethodExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#variableAssignment}.
+	 * Enter a parse tree produced by {@link vrJASSParser#variableArrayExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariableAssignment(vrJASSParser.VariableAssignmentContext ctx);
+	void enterVariableArrayExpression(vrJASSParser.VariableArrayExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#variableAssignment}.
+	 * Exit a parse tree produced by {@link vrJASSParser#variableArrayExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariableAssignment(vrJASSParser.VariableAssignmentContext ctx);
+	void exitVariableArrayExpression(vrJASSParser.VariableArrayExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#variableAssignmentStat}.
+	 * Enter a parse tree produced by {@link vrJASSParser#variableExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariableAssignmentStat(vrJASSParser.VariableAssignmentStatContext ctx);
+	void enterVariableExpression(vrJASSParser.VariableExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#variableAssignmentStat}.
+	 * Exit a parse tree produced by {@link vrJASSParser#variableExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariableAssignmentStat(vrJASSParser.VariableAssignmentStatContext ctx);
+	void exitVariableExpression(vrJASSParser.VariableExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#propertyAssignment}.
+	 * Enter a parse tree produced by {@link vrJASSParser#propertyExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterPropertyAssignment(vrJASSParser.PropertyAssignmentContext ctx);
+	void enterPropertyExpression(vrJASSParser.PropertyExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#propertyAssignment}.
+	 * Exit a parse tree produced by {@link vrJASSParser#propertyExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitPropertyAssignment(vrJASSParser.PropertyAssignmentContext ctx);
+	void exitPropertyExpression(vrJASSParser.PropertyExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#propertyAssignmentStat}.
+	 * Enter a parse tree produced by {@link vrJASSParser#integerExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterPropertyAssignmentStat(vrJASSParser.PropertyAssignmentStatContext ctx);
+	void enterIntegerExpression(vrJASSParser.IntegerExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#propertyAssignmentStat}.
+	 * Exit a parse tree produced by {@link vrJASSParser#integerExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitPropertyAssignmentStat(vrJASSParser.PropertyAssignmentStatContext ctx);
+	void exitIntegerExpression(vrJASSParser.IntegerExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#intExpr}.
+	 * Enter a parse tree produced by {@link vrJASSParser#realExpression}.
 	 * @param ctx the parse tree
 	 */
-	void enterIntExpr(vrJASSParser.IntExprContext ctx);
+	void enterRealExpression(vrJASSParser.RealExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#intExpr}.
+	 * Exit a parse tree produced by {@link vrJASSParser#realExpression}.
 	 * @param ctx the parse tree
 	 */
-	void exitIntExpr(vrJASSParser.IntExprContext ctx);
+	void exitRealExpression(vrJASSParser.RealExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#stringExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringExpression(vrJASSParser.StringExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#stringExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringExpression(vrJASSParser.StringExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#booleanExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanExpression(vrJASSParser.BooleanExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#booleanExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanExpression(vrJASSParser.BooleanExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#comparisonExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparisonExpression(vrJASSParser.ComparisonExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#comparisonExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparisonExpression(vrJASSParser.ComparisonExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#orExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrExpression(vrJASSParser.OrExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#orExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrExpression(vrJASSParser.OrExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#andExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndExpression(vrJASSParser.AndExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#andExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndExpression(vrJASSParser.AndExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#notExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotExpression(vrJASSParser.NotExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#notExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotExpression(vrJASSParser.NotExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#parenthesisExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParenthesisExpression(vrJASSParser.ParenthesisExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#parenthesisExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParenthesisExpression(vrJASSParser.ParenthesisExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#nullExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNullExpression(vrJASSParser.NullExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#nullExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNullExpression(vrJASSParser.NullExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link vrJASSParser#expr}.
 	 * @param ctx the parse tree
@@ -159,6 +249,206 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitExprList(vrJASSParser.ExprListContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#debugStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterDebugStatement(vrJASSParser.DebugStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#debugStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitDebugStatement(vrJASSParser.DebugStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#elseIfStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseIfStatement(vrJASSParser.ElseIfStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#elseIfStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseIfStatement(vrJASSParser.ElseIfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseStatement(vrJASSParser.ElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseStatement(vrJASSParser.ElseStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStatement(vrJASSParser.IfStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#ifStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStatement(vrJASSParser.IfStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#breakStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterBreakStatement(vrJASSParser.BreakStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#breakStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitBreakStatement(vrJASSParser.BreakStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#continueStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterContinueStatement(vrJASSParser.ContinueStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#continueStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitContinueStatement(vrJASSParser.ContinueStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#exitWhenStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterExitWhenStatement(vrJASSParser.ExitWhenStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#exitWhenStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitExitWhenStatement(vrJASSParser.ExitWhenStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#forStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterForStatement(vrJASSParser.ForStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#forStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitForStatement(vrJASSParser.ForStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStatement(vrJASSParser.WhileStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStatement(vrJASSParser.WhileStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#loopStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLoopStatement(vrJASSParser.LoopStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#loopStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLoopStatement(vrJASSParser.LoopStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#returnStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnStatement(vrJASSParser.ReturnStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#returnStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnStatement(vrJASSParser.ReturnStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#functionCallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionCallStatement(vrJASSParser.FunctionCallStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#functionCallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionCallStatement(vrJASSParser.FunctionCallStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#methodCallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodCallStatement(vrJASSParser.MethodCallStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#methodCallStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodCallStatement(vrJASSParser.MethodCallStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#variableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableStatement(vrJASSParser.VariableStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#variableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableStatement(vrJASSParser.VariableStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#globalVariableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterGlobalVariableStatement(vrJASSParser.GlobalVariableStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#globalVariableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitGlobalVariableStatement(vrJASSParser.GlobalVariableStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#localVariableArrayStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLocalVariableArrayStatement(vrJASSParser.LocalVariableArrayStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#localVariableArrayStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLocalVariableArrayStatement(vrJASSParser.LocalVariableArrayStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#localVariableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterLocalVariableStatement(vrJASSParser.LocalVariableStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#localVariableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitLocalVariableStatement(vrJASSParser.LocalVariableStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#setVariableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterSetVariableStatement(vrJASSParser.SetVariableStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#setVariableStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitSetVariableStatement(vrJASSParser.SetVariableStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#propertyVisibility}.
+	 * @param ctx the parse tree
+	 */
+	void enterPropertyVisibility(vrJASSParser.PropertyVisibilityContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#propertyVisibility}.
+	 * @param ctx the parse tree
+	 */
+	void exitPropertyVisibility(vrJASSParser.PropertyVisibilityContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link vrJASSParser#propertyStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPropertyStatement(vrJASSParser.PropertyStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link vrJASSParser#propertyStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPropertyStatement(vrJASSParser.PropertyStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link vrJASSParser#stat}.
 	 * @param ctx the parse tree
 	 */
@@ -169,75 +459,15 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitStat(vrJASSParser.StatContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#statBlock}.
+	 * Enter a parse tree produced by {@link vrJASSParser#globalBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterStatBlock(vrJASSParser.StatBlockContext ctx);
+	void enterGlobalBlockStatement(vrJASSParser.GlobalBlockStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#statBlock}.
+	 * Exit a parse tree produced by {@link vrJASSParser#globalBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitStatBlock(vrJASSParser.StatBlockContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#loopBlock}.
-	 * @param ctx the parse tree
-	 */
-	void enterLoopBlock(vrJASSParser.LoopBlockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#loopBlock}.
-	 * @param ctx the parse tree
-	 */
-	void exitLoopBlock(vrJASSParser.LoopBlockContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#forStat}.
-	 * @param ctx the parse tree
-	 */
-	void enterForStat(vrJASSParser.ForStatContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#forStat}.
-	 * @param ctx the parse tree
-	 */
-	void exitForStat(vrJASSParser.ForStatContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#whileStat}.
-	 * @param ctx the parse tree
-	 */
-	void enterWhileStat(vrJASSParser.WhileStatContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#whileStat}.
-	 * @param ctx the parse tree
-	 */
-	void exitWhileStat(vrJASSParser.WhileStatContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#loopStat}.
-	 * @param ctx the parse tree
-	 */
-	void enterLoopStat(vrJASSParser.LoopStatContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#loopStat}.
-	 * @param ctx the parse tree
-	 */
-	void exitLoopStat(vrJASSParser.LoopStatContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#ifStat}.
-	 * @param ctx the parse tree
-	 */
-	void enterIfStat(vrJASSParser.IfStatContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#ifStat}.
-	 * @param ctx the parse tree
-	 */
-	void exitIfStat(vrJASSParser.IfStatContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#returnStat}.
-	 * @param ctx the parse tree
-	 */
-	void enterReturnStat(vrJASSParser.ReturnStatContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#returnStat}.
-	 * @param ctx the parse tree
-	 */
-	void exitReturnStat(vrJASSParser.ReturnStatContext ctx);
+	void exitGlobalBlockStatement(vrJASSParser.GlobalBlockStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link vrJASSParser#typeArgumentList}.
 	 * @param ctx the parse tree
@@ -259,125 +489,45 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitTypeArgument(vrJASSParser.TypeArgumentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#argList}.
+	 * Enter a parse tree produced by {@link vrJASSParser#functionStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterArgList(vrJASSParser.ArgListContext ctx);
+	void enterFunctionStatement(vrJASSParser.FunctionStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#argList}.
+	 * Exit a parse tree produced by {@link vrJASSParser#functionStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitArgList(vrJASSParser.ArgListContext ctx);
+	void exitFunctionStatement(vrJASSParser.FunctionStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#function}.
+	 * Enter a parse tree produced by {@link vrJASSParser#methodStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunction(vrJASSParser.FunctionContext ctx);
+	void enterMethodStatement(vrJASSParser.MethodStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#function}.
+	 * Exit a parse tree produced by {@link vrJASSParser#methodStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunction(vrJASSParser.FunctionContext ctx);
+	void exitMethodStatement(vrJASSParser.MethodStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#method}.
+	 * Enter a parse tree produced by {@link vrJASSParser#structBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterMethod(vrJASSParser.MethodContext ctx);
+	void enterStructBlockStatement(vrJASSParser.StructBlockStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#method}.
+	 * Exit a parse tree produced by {@link vrJASSParser#structBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitMethod(vrJASSParser.MethodContext ctx);
+	void exitStructBlockStatement(vrJASSParser.StructBlockStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#methodCall}.
+	 * Enter a parse tree produced by {@link vrJASSParser#scopeBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterMethodCall(vrJASSParser.MethodCallContext ctx);
+	void enterScopeBlockStatement(vrJASSParser.ScopeBlockStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#methodCall}.
+	 * Exit a parse tree produced by {@link vrJASSParser#scopeBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitMethodCall(vrJASSParser.MethodCallContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#functionCall}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionCall(vrJASSParser.FunctionCallContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#functionCall}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionCall(vrJASSParser.FunctionCallContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#globalVariableDefStat}.
-	 * @param ctx the parse tree
-	 */
-	void enterGlobalVariableDefStat(vrJASSParser.GlobalVariableDefStatContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#globalVariableDefStat}.
-	 * @param ctx the parse tree
-	 */
-	void exitGlobalVariableDefStat(vrJASSParser.GlobalVariableDefStatContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#globalDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterGlobalDef(vrJASSParser.GlobalDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#globalDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitGlobalDef(vrJASSParser.GlobalDefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#functionDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionDef(vrJASSParser.FunctionDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#functionDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionDef(vrJASSParser.FunctionDefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#methodDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterMethodDef(vrJASSParser.MethodDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#methodDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitMethodDef(vrJASSParser.MethodDefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#propertyDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterPropertyDef(vrJASSParser.PropertyDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#propertyDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitPropertyDef(vrJASSParser.PropertyDefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#structDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterStructDef(vrJASSParser.StructDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#structDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitStructDef(vrJASSParser.StructDefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#scopeDef}.
-	 * @param ctx the parse tree
-	 */
-	void enterScopeDef(vrJASSParser.ScopeDefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#scopeDef}.
-	 * @param ctx the parse tree
-	 */
-	void exitScopeDef(vrJASSParser.ScopeDefContext ctx);
+	void exitScopeBlockStatement(vrJASSParser.ScopeBlockStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link vrJASSParser#requirementList}.
 	 * @param ctx the parse tree
@@ -389,13 +539,13 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitRequirementList(vrJASSParser.RequirementListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#libraryDef}.
+	 * Enter a parse tree produced by {@link vrJASSParser#libraryBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void enterLibraryDef(vrJASSParser.LibraryDefContext ctx);
+	void enterLibraryBlockStatement(vrJASSParser.LibraryBlockStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#libraryDef}.
+	 * Exit a parse tree produced by {@link vrJASSParser#libraryBlockStatement}.
 	 * @param ctx the parse tree
 	 */
-	void exitLibraryDef(vrJASSParser.LibraryDefContext ctx);
+	void exitLibraryBlockStatement(vrJASSParser.LibraryBlockStatementContext ctx);
 }
