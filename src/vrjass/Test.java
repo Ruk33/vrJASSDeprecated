@@ -44,9 +44,9 @@ public class Test {
 			
 			ErrorBag errorBag = new ErrorBag();
 			
-			//walker.walk(new RefPhase(def.getParserTree(), errorBag), tree);
+			walker.walk(new RefPhase(def.getParserTree(), errorBag), tree);
 			
-			//System.out.println(errorBag.getMessages());
+			System.out.println(errorBag.getMessages());
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 		}

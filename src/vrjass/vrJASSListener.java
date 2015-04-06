@@ -69,16 +69,6 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitArgList(vrJASSParser.ArgListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#mathExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterMathExpression(vrJASSParser.MathExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#mathExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitMathExpression(vrJASSParser.MathExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link vrJASSParser#functionExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -99,145 +89,185 @@ public interface vrJASSListener extends ParseTreeListener {
 	 */
 	void exitMethodExpression(vrJASSParser.MethodExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#variableArrayExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableArrayExpression(vrJASSParser.VariableArrayExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#variableArrayExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableArrayExpression(vrJASSParser.VariableArrayExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#variableExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableExpression(vrJASSParser.VariableExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#variableExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableExpression(vrJASSParser.VariableExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#propertyExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterPropertyExpression(vrJASSParser.PropertyExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#propertyExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitPropertyExpression(vrJASSParser.PropertyExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#integerExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterIntegerExpression(vrJASSParser.IntegerExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#integerExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitIntegerExpression(vrJASSParser.IntegerExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#realExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterRealExpression(vrJASSParser.RealExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#realExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitRealExpression(vrJASSParser.RealExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#stringExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterStringExpression(vrJASSParser.StringExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#stringExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitStringExpression(vrJASSParser.StringExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#booleanExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterBooleanExpression(vrJASSParser.BooleanExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#booleanExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitBooleanExpression(vrJASSParser.BooleanExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#comparisonExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterComparisonExpression(vrJASSParser.ComparisonExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#comparisonExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitComparisonExpression(vrJASSParser.ComparisonExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#orExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterOrExpression(vrJASSParser.OrExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#orExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitOrExpression(vrJASSParser.OrExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#andExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAndExpression(vrJASSParser.AndExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#andExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAndExpression(vrJASSParser.AndExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#notExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterNotExpression(vrJASSParser.NotExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#notExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitNotExpression(vrJASSParser.NotExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#parenthesisExpression}.
+	 * Enter a parse tree produced by the {@code parenthesisExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterParenthesisExpression(vrJASSParser.ParenthesisExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#parenthesisExpression}.
+	 * Exit a parse tree produced by the {@code parenthesisExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitParenthesisExpression(vrJASSParser.ParenthesisExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#nullExpression}.
+	 * Enter a parse tree produced by the {@code mathExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterMathExpression(vrJASSParser.MathExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code mathExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitMathExpression(vrJASSParser.MathExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code comparisonExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparisonExpression(vrJASSParser.ComparisonExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code comparisonExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparisonExpression(vrJASSParser.ComparisonExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ignoreFunctionExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIgnoreFunctionExpression(vrJASSParser.IgnoreFunctionExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ignoreFunctionExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIgnoreFunctionExpression(vrJASSParser.IgnoreFunctionExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code booleanExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanExpression(vrJASSParser.BooleanExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code booleanExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanExpression(vrJASSParser.BooleanExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code integerExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerExpression(vrJASSParser.IntegerExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code integerExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerExpression(vrJASSParser.IntegerExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code variableExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableExpression(vrJASSParser.VariableExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code variableExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableExpression(vrJASSParser.VariableExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code orExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrExpression(vrJASSParser.OrExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code orExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrExpression(vrJASSParser.OrExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code andExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndExpression(vrJASSParser.AndExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code andExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndExpression(vrJASSParser.AndExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code stringExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringExpression(vrJASSParser.StringExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stringExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringExpression(vrJASSParser.StringExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ignoreMethodExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterIgnoreMethodExpression(vrJASSParser.IgnoreMethodExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ignoreMethodExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitIgnoreMethodExpression(vrJASSParser.IgnoreMethodExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code nullExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterNullExpression(vrJASSParser.NullExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#nullExpression}.
+	 * Exit a parse tree produced by the {@code nullExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitNullExpression(vrJASSParser.NullExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link vrJASSParser#expr}.
+	 * Enter a parse tree produced by the {@code variableArrayExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr(vrJASSParser.ExprContext ctx);
+	void enterVariableArrayExpression(vrJASSParser.VariableArrayExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link vrJASSParser#expr}.
+	 * Exit a parse tree produced by the {@code variableArrayExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr(vrJASSParser.ExprContext ctx);
+	void exitVariableArrayExpression(vrJASSParser.VariableArrayExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code realExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterRealExpression(vrJASSParser.RealExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code realExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitRealExpression(vrJASSParser.RealExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code propertyExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPropertyExpression(vrJASSParser.PropertyExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code propertyExpression}
+	 * labeled alternative in {@link vrJASSParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPropertyExpression(vrJASSParser.PropertyExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link vrJASSParser#exprList}.
 	 * @param ctx the parse tree

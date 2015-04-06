@@ -1,9 +1,12 @@
 package expression;
 
-public class IntegerBooleanExpression extends BooleanExpression {
+public class IntegerBooleanExpression extends ComparisonBooleanExpression {
 
 	public IntegerBooleanExpression(Expression a) {
-		super(a, Operator.NOT_EQUAL, new IntegerExpression(0));
+		super(Operator.NOT_EQUAL);
+
+		this.setExpressionA(a);
+		this.setExpressionB(new IntegerExpression(0));
 	}
 
 }

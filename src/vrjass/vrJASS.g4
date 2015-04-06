@@ -25,39 +25,24 @@ variableType : THISTYPE | ID;
  */
 argList : '(' exprList ')' | '(' ')';
  
-mathExpression: ('*'|'/'|'-'|'+') expr;
 functionExpression: ID argList;
 methodExpression: DOT functionExpression;
-variableArrayExpression: ID '[' expr ']';
-variableExpression: THIS | THISTYPE | ID;
-propertyExpression: DOT ID; 
-integerExpression: INTEGER;
-realExpression: REAL;
-stringExpression: STRING;
-booleanExpression: TRUE | FALSE;
-comparisonExpression: (EQUAL | NOT_EQUAL | GREATER_THAN | GREATER_THAN_OR_EQUAL_THAN | LOWER_THAN | LOWER_THAN_OR_EQUAL_THAN) expr;
-orExpression: OR expr;
-andExpression: AND expr;
-notExpression: NOT expr;
-parenthesisExpression: '(' expr ')';
-nullExpression: NULL;
 
-expr:	mathExpression
-	|	functionExpression
-	|	expr methodExpression
-	|	integerExpression
-	|	realExpression
-	|	stringExpression
-	|	nullExpression
-	|	booleanExpression
-	|	expr comparisonExpression
-	|	expr orExpression
-	|	expr andExpression
-	|	notExpression
-	|	parenthesisExpression
-	|	expr propertyExpression
-	|	variableArrayExpression
-	|	variableExpression
+expr:	expr (MULT|DIV|PLUS|MINUS) expr #mathExpression
+	|	INTEGER #integerExpression
+	|	REAL #realExpression
+	|	STRING #stringExpression
+	|	NULL #nullExpression
+	|	(TRUE|FALSE) #booleanExpression
+	|	expr (EQUAL|NOT_EQUAL|GREATER_THAN|GREATER_THAN_OR_EQUAL_THAN|LOWER_THAN|LOWER_THAN_OR_EQUAL_THAN) expr #comparisonExpression
+	|	'(' expr ')' #parenthesisExpression
+	|	expr OR expr #orExpression
+	|	expr AND expr #andExpression
+	|	(THIS|THISTYPE|ID) #variableExpression
+	|	ID '[' expr ']' #variableArrayExpression
+	|	expr DOT ID #propertyExpression
+	|	functionExpression #ignoreFunctionExpression
+	|	methodExpression #ignoreMethodExpression
 	;
 
 exprList : expr (',' expr)*;
@@ -83,11 +68,11 @@ returnStatement : RETURN expr;
 functionCallStatement: CALL functionExpression;
 methodCallStatement: CALL expr methodExpression;
 
-variableStatement: variableType variableExpression ('=' expr)?;
+variableStatement: variableType ID ('=' expr)?;
 globalVariableStatement: nonePublicPrivateVisibility (CONSTANT)? variableStatement;
-localVariableArrayStatement: LOCAL variableType variableArrayExpression;
+localVariableArrayStatement: LOCAL variableType ARRAY ID;
 localVariableStatement: LOCAL variableStatement;
-setVariableStatement: SET ((expr propertyExpression) | variableArrayExpression | variableExpression) '=' expr;
+setVariableStatement: SET ID '=' expr;
 
 propertyVisibility: (PUBLIC | PRIVATE | READONLY)?;
 propertyStatement: propertyVisibility (STATIC)? (CONSTANT)? variableStatement;
@@ -103,7 +88,6 @@ stat: EOL
 	| methodCallStatement
 	| localVariableArrayStatement
 	| localVariableStatement
-	| propertyExpression
 	| setVariableStatement
 	| debugStatement
 	;
@@ -114,7 +98,7 @@ stat: EOL
 globalBlockStatement: GLOBAL EOL ((globalVariableStatement)? EOL)* (ENDGLOBAL | END);
 
 typeArgumentList : NOTHING | typeArgument (',' typeArgument)*;
-typeArgument : variableType variableExpression;
+typeArgument : variableType ID;
 
 functionStatement: nonePublicPrivateVisibility FUNCTION ID TAKES typeArgumentList RETURNS (ID | NOTHING) EOL stat* (ENDFUNCTION | END);
 methodStatement: nonePublicPrivateVisibility (STATIC | STUB)? METHOD ID TAKES typeArgumentList RETURNS (variableType | NOTHING) EOL stat* (ENDMETHOD | END);
@@ -226,6 +210,11 @@ ENDGLOBAL : 'endglobals';
 
 LINECOMMENT : '//' .*? '\r'? '\n' -> skip;
 COMMENT : '/*' .*? '*/' -> skip;
+
+PLUS : '+';
+MINUS : '-';
+MULT : '*';
+DIV : '/';
 
 ASSERTPLUS : '+=';
 ASSERTMINUS : '-=';

@@ -1,9 +1,12 @@
 package expression;
 
-public class NullBooleanExpression extends BooleanExpression {
+public class NullBooleanExpression extends ComparisonBooleanExpression {
 
 	public NullBooleanExpression(Expression a) {
-		super(a, Operator.NOT_EQUAL, new NullExpression());
+		super(Operator.NOT_EQUAL);
+
+		this.setExpressionA(a);
+		this.setExpressionB(new NullExpression());
 	}
 
 }

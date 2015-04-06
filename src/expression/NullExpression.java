@@ -6,5 +6,10 @@ public class NullExpression implements Expression {
 	public String toJASS() {
 		return "null";
 	}
-	
+
+	@Override
+	public String getType() {
+		return "nothing";
+	}
+
 }

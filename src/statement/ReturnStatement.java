@@ -9,10 +9,14 @@ public class ReturnStatement implements Statement {
 	public ReturnStatement(Expression expression) {
 		this.expression = expression;
 	}
-	
+
+	public Expression getExpression() {
+		return this.expression;
+	}
+
 	@Override
 	public String toJASS() {
 		return "return " + this.expression.toJASS();
 	}
-	
+
 }

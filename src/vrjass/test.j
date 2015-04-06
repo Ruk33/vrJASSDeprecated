@@ -1,5 +1,5 @@
 library a requires b
-	function pepe takes nothing returns nothing
-		call hola(2, f(5, 8))
+	function pepe takes nothing returns boolean
+		return (4*5)+1>(4==(6))
 	endfunction
 endlibrary
