@@ -1,9 +1,6 @@
 package listener;
 
-import java.util.HashMap;
-
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import expression.ABExpression;
@@ -26,9 +23,9 @@ import symbol.LimboSymbol;
 import symbol.LocalVariableSymbol;
 import symbol.PrimitiveType;
 import symbol.ScopeSymbol;
-import symbol.Symbol;
 import symbol.VariableSymbol;
 import symbol.Visibility;
+import util.ElementContainer;
 import vrjass.vrJASSBaseListener;
 import vrjass.vrJASSParser.BooleanExpressionContext;
 import vrjass.vrJASSParser.ComparisonExpressionContext;
@@ -48,29 +45,24 @@ import vrjass.vrJASSParser.VariableExpressionContext;
 
 public class DefPhase extends vrJASSBaseListener {
 
-	protected ParseTreeProperty<Symbol> parseTree;
+	protected ElementContainer elementContainer;
 
 	protected LimboSymbol limboSymbol;
 	protected ScopeSymbol scopeSymbol;
 
 	protected DependencyDefiner dependencyDefiner;
 
-	protected HashMap<ParserRuleContext, Expression> expressionMap;
-	protected Expression expression;
-
 	public DefPhase() {
-		this.parseTree = new ParseTreeProperty<Symbol>();
+		this.elementContainer = new ElementContainer();
 
 		this.limboSymbol = new LimboSymbol();
 		this.scopeSymbol = this.limboSymbol;
 
-		this.dependencyDefiner = new DependencyDefiner(new LimboSymbol());
-
-		this.expressionMap = new HashMap<ParserRuleContext, Expression>();
+		this.dependencyDefiner = new DependencyDefiner(this.limboSymbol);
 	}
 
-	public ParseTreeProperty<Symbol> getParserTree() {
-		return this.parseTree;
+	public ElementContainer getElementContainer() {
+		return this.elementContainer;
 	}
 
 	public DefPhase defineAllDependencies() {
@@ -90,16 +82,6 @@ public class DefPhase extends vrJASSBaseListener {
 		return Visibility.PUBLIC;
 	}
 
-	protected DefPhase registerSymbol(ParserRuleContext ctx, Symbol symbol) {
-		this.parseTree.put(ctx, symbol);
-		return this;
-	}
-
-	protected DefPhase registerExpression(ParserRuleContext ctx, Expression expression) {
-		this.expressionMap.put(ctx, expression);
-		return this;
-	}
-
 	protected DefPhase enterScope(ScopeSymbol scopeSymbol) {
 		this.scopeSymbol = scopeSymbol;
 		return this;
@@ -115,7 +97,7 @@ public class DefPhase extends vrJASSBaseListener {
 		LibrarySymbol library = new LibrarySymbol(ctx.ID(0).getText(), this.limboSymbol);
 
 		this.enterScope(library);
-		this.registerSymbol(ctx, library);
+		this.elementContainer.getSymbols().put(ctx, library);
 	}
 
 	@Override
@@ -142,12 +124,12 @@ public class DefPhase extends vrJASSBaseListener {
 		}
 
 		this.enterScope(function);
-		this.registerSymbol(ctx, function);
+		this.elementContainer.getSymbols().put(ctx, function);
 	}
 
 	@Override
 	public void enterTypeArgument(TypeArgumentContext ctx) {
-		this.registerSymbol(ctx, new ArgumentSymbol(ctx.getText(), ctx.variableType().getText(), this.scopeSymbol));
+		this.elementContainer.getSymbols().put(ctx, new ArgumentSymbol(ctx.getText(), ctx.variableType().getText(), this.scopeSymbol));
 	}
 
 	@Override
@@ -155,7 +137,7 @@ public class DefPhase extends vrJASSBaseListener {
 		String name = ctx.variableStatement().getText();
 		String type = ctx.variableStatement().variableType().getText();
 
-		this.registerSymbol(ctx, new LocalVariableSymbol(name, type, false, this.scopeSymbol));
+		this.elementContainer.getSymbols().put(ctx, new LocalVariableSymbol(name, type, false, this.scopeSymbol));
 	}
 
 	@Override
@@ -163,7 +145,7 @@ public class DefPhase extends vrJASSBaseListener {
 		String name = ctx.ID().getText();
 		String type = ctx.variableType().getText();
 
-		this.registerSymbol(ctx, new LocalVariableSymbol(name, type, true, this.scopeSymbol));
+		this.elementContainer.getSymbols().put(ctx, new LocalVariableSymbol(name, type, true, this.scopeSymbol));
 	}
 
 	@Override
@@ -180,14 +162,14 @@ public class DefPhase extends vrJASSBaseListener {
 			operation = Operation.PLUS;
 		}
 
-		Expression a = this.expressionMap.get(ctx.expr(0));
-		Expression b = this.expressionMap.get(ctx.expr(1));
+		Expression a = this.elementContainer.getExpressions().get(ctx.expr(0));
+		Expression b = this.elementContainer.getExpressions().get(ctx.expr(1));
 
 		ABExpression expression = new MathExpression(operation);
 		expression.setExpressionA(a);
 		expression.setExpressionB(b);
 
-		this.registerExpression(ctx, expression);
+		this.elementContainer.getExpressions().put(ctx, expression);
 	}
 
 	@Override
@@ -208,25 +190,25 @@ public class DefPhase extends vrJASSBaseListener {
 			operator = Operator.LOWER_OR_EQUAL_THAN;
 		}
 
-		Expression a = this.expressionMap.get(ctx.expr(0));
-		Expression b = this.expressionMap.get(ctx.expr(1));
+		Expression a = this.elementContainer.getExpressions().get(ctx.expr(0));
+		Expression b = this.elementContainer.getExpressions().get(ctx.expr(1));
 
 		ABExpression expression = new ComparisonBooleanExpression(operator);
 		expression.setExpressionA(a);
 		expression.setExpressionB(b);
 
-		this.registerExpression(ctx, expression);
+		this.elementContainer.getExpressions().put(ctx, expression);
 	}
 
 	@Override
 	public void enterIntegerExpression(IntegerExpressionContext ctx) {
-		this.registerExpression(ctx, new IntegerExpression(ctx.INTEGER().getText()));
+		this.elementContainer.getExpressions().put(ctx, new IntegerExpression(ctx.INTEGER().getText()));
 	}
 
 	@Override
 	public void enterVariableExpression(VariableExpressionContext ctx) {
 		VariableSymbol variableSymbol = (VariableSymbol) this.scopeSymbol.resolveBackwards(ctx.ID().getText(), PrimitiveType.VARIABLE);
-		this.registerExpression(ctx, new VariableExpression(variableSymbol, null));
+		this.elementContainer.getExpressions().put(ctx, new VariableExpression(variableSymbol, null));
 	}
 
 	@Override
@@ -237,23 +219,23 @@ public class DefPhase extends vrJASSBaseListener {
 
 	@Override
 	public void exitParenthesisExpression(ParenthesisExpressionContext ctx) {
-		Expression expression = this.expressionMap.get(ctx.expr());
-		this.registerExpression(ctx, new ParenthesisExpression(expression));
+		Expression expression = this.elementContainer.getExpressions().get(ctx.expr());
+		this.elementContainer.getExpressions().put(ctx, new ParenthesisExpression(expression));
 	}
 
 	@Override
 	public void enterBooleanExpression(BooleanExpressionContext ctx) {
-		this.registerExpression(ctx, new BooleanExpression(ctx.TRUE() != null));
+		this.elementContainer.getExpressions().put(ctx, new BooleanExpression(ctx.TRUE() != null));
 	}
 
 	@Override
 	public void enterNullExpression(NullExpressionContext ctx) {
-		this.registerExpression(ctx, new NullExpression());
+		this.elementContainer.getExpressions().put(ctx, new NullExpression());
 	}
 
 	@Override
 	public void exitReturnStatement(ReturnStatementContext ctx) {
-		Expression expression = this.expressionMap.get(ctx.expr());
+		Expression expression = this.elementContainer.getExpressions().get(ctx.expr());
 		((FunctionSymbol) this.scopeSymbol).defineStatement(new ReturnStatement(expression));
 	}
 

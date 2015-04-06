@@ -18,6 +18,10 @@ public class ComparisonBooleanExpression extends ABExpression {
 		this.operator = operator;
 	}
 
+	public Operator getOperator() {
+		return this.operator;
+	}
+
 	@Override
 	public String toJASS() {
 		return this.a.toJASS() + this.operator.toString() + this.b.toJASS();

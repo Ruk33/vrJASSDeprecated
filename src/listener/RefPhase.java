@@ -1,6 +1,5 @@
 package listener;
 
-import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import symbol.FunctionSymbol;
@@ -8,6 +7,7 @@ import symbol.LocalVariableSymbol;
 import symbol.PrimitiveType;
 import symbol.ScopeSymbol;
 import symbol.Symbol;
+import util.ElementContainer;
 import util.ErrorBag;
 import validator.FunctionValidator;
 import vrjass.vrJASSBaseListener;
@@ -18,18 +18,18 @@ import vrjass.vrJASSParser.RequirementListContext;
 
 public class RefPhase extends vrJASSBaseListener {
 
-	protected ParseTreeProperty<Symbol> parseTree;
+	protected ElementContainer elementContainer;
 	protected ErrorBag errorBag;
 	protected Symbol symbol;
 
-	public RefPhase(ParseTreeProperty<Symbol> parseTree, ErrorBag errorBag) {
-		this.parseTree = parseTree;
+	public RefPhase(ElementContainer elementContainer, ErrorBag errorBag) {
+		this.elementContainer = elementContainer;
 		this.errorBag = errorBag;
 	}
 
 	@Override
 	public void enterLibraryBlockStatement(LibraryBlockStatementContext ctx) {
-		this.symbol = (ScopeSymbol) this.parseTree.get(ctx);
+		this.symbol = (ScopeSymbol) this.elementContainer.getSymbols().get(ctx);
 	}
 
 	@Override
@@ -54,10 +54,10 @@ public class RefPhase extends vrJASSBaseListener {
 
 	@Override
 	public void enterFunctionStatement(FunctionStatementContext ctx) {
-		this.symbol = this.parseTree.get(ctx);
+		this.symbol = this.elementContainer.getSymbols().get(ctx);
 
 		FunctionValidator validator = new FunctionValidator((FunctionSymbol) this.symbol);
-		validator.checkReturnType();
+		validator.check();
 
 		System.out.println(validator.getErrorBag().getMessages());
 	}
@@ -69,7 +69,7 @@ public class RefPhase extends vrJASSBaseListener {
 
 	@Override
 	public void enterLocalVariableStatement(LocalVariableStatementContext ctx) {
-		this.symbol = (LocalVariableSymbol) this.parseTree.get(ctx);
+		this.symbol = (LocalVariableSymbol) this.elementContainer.getSymbols().get(ctx);
 	}
 
 	@Override

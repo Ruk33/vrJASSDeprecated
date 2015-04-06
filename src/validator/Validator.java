@@ -9,4 +9,6 @@ public interface Validator {
 
 	public ErrorBag getErrorBag();
 
+	public boolean check();
+
 }

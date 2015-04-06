@@ -1,5 +1,6 @@
 package util;
 
+import java.util.Collection;
 import java.util.LinkedList;
 
 public class ErrorBag {
@@ -13,6 +14,11 @@ public class ErrorBag {
 
 	public ErrorBag clear() {
 		this.messages.clear();
+		return this;
+	}
+
+	public ErrorBag addAll(Collection<? extends String> messages) {
+		this.messages.addAll(messages);
 		return this;
 	}
 
