@@ -2,21 +2,10 @@ package validator;
 
 import expression.ComparisonBooleanExpression;
 import expression.ComparisonBooleanExpression.Operator;
-import util.ErrorBag;
 
-public class ComparisonBooleanExpressionValidator implements Validator {
+public class ComparisonBooleanExpressionValidator extends Validator {
 
-	protected ErrorBag errorBag;
 	protected ComparisonBooleanExpression expression;
-
-	@Override
-	public ErrorBag getErrorBag() {
-		return this.errorBag;
-	}
-
-	public ComparisonBooleanExpressionValidator() {
-		this.errorBag = new ErrorBag();
-	}
 
 	public Validator setExpression(ComparisonBooleanExpression expression) {
 		this.expression = expression;

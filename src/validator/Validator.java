@@ -1,14 +1,26 @@
 package validator;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+
+import statement.Statement;
 import util.ErrorBag;
 
-/*
- * You symbol-sir, will be validated, indeed yes you are, how charmy, ho ho ho!
- */
-public interface Validator {
+public abstract class Validator {
 
-	public ErrorBag getErrorBag();
+	protected ParserRuleContext ctx;
+	protected Statement statement;
+	protected ErrorBag errorBag;
 
-	public boolean check();
+	public Validator(ParserRuleContext ctx, Statement statement) {
+		this.ctx = ctx;
+		this.statement = statement;
+		this.errorBag = new ErrorBag();
+	}
+
+	public ErrorBag getErrorBag() {
+		return this.errorBag;
+	}
+
+	public abstract boolean check();
 
 }

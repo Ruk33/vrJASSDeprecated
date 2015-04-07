@@ -16,6 +16,12 @@ import vrjass.vrJASSParser.LibraryBlockStatementContext;
 import vrjass.vrJASSParser.LocalVariableStatementContext;
 import vrjass.vrJASSParser.RequirementListContext;
 
+/**
+ *
+ * @deprecated
+ * @author Ruke
+ *
+ */
 public class RefPhase extends vrJASSBaseListener {
 
 	protected ElementContainer elementContainer;

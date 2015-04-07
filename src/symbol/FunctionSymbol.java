@@ -11,7 +11,6 @@ public class FunctionSymbol extends ScopeSymbol {
 	protected LinkedList<Symbol> arguments;
 	protected String returnType;
 	protected LinkedList<ReturnStatement> returnStatements;
-	protected LinkedList<Statement> statements;
 
 	public FunctionSymbol(String name, Visibility visibility, Symbol parent) {
 		super(name, null, PrimitiveType.FUNCTION, visibility, parent);
@@ -19,11 +18,6 @@ public class FunctionSymbol extends ScopeSymbol {
 		this.arguments = new LinkedList<Symbol>();
 		this.returnType = "nothing";
 		this.returnStatements = new LinkedList<ReturnStatement>();
-		this.statements = new LinkedList<Statement>();
-	}
-
-	public LinkedList<Statement> getStatements() {
-		return this.statements;
 	}
 
 	public LinkedList<ReturnStatement> getReturnStatements() {
@@ -40,9 +34,7 @@ public class FunctionSymbol extends ScopeSymbol {
 			this.returnStatements.add((ReturnStatement) statement);
 		}
 
-		this.statements.add(statement);
-
-		return this;
+		return super.defineStatement(statement);
 	}
 
 	@Override

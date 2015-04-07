@@ -16,7 +16,11 @@ public class ReturnStatement implements Statement {
 
 	@Override
 	public String toJASS() {
-		return "return " + this.expression.toJASS();
+		if (this.expression != null) {
+			return "return " + this.expression.toJASS();
+		}
+
+		return "return";
 	}
 
 }

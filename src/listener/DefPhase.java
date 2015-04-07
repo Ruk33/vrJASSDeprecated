@@ -212,9 +212,11 @@ public class DefPhase extends vrJASSBaseListener {
 	}
 
 	@Override
-	public void enterVariableArrayExpression(VariableArrayExpressionContext ctx) {
-		//VariableSymbol variableSymbol = (VariableSymbol) this.scopeSymbol.resolveBackwards(ctx.ID().getText(), PrimitiveType.VARIABLE);
-		//this.registerExpression(ctx, new VariableExpression(variableSymbol, this.expressionBuilder.getResult()));
+	public void exitVariableArrayExpression(VariableArrayExpressionContext ctx) {
+		VariableSymbol variableSymbol = (VariableSymbol) this.scopeSymbol.resolveBackwards(ctx.ID().getText(), PrimitiveType.VARIABLE);
+		Expression expression = this.elementContainer.getExpressions().get(ctx.expr());
+
+		this.elementContainer.getExpressions().put(ctx, new VariableExpression(variableSymbol, expression));
 	}
 
 	@Override
