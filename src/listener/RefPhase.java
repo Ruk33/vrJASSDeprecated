@@ -2,26 +2,20 @@ package listener;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import symbol.FunctionSymbol;
+import statement.ReturnStatement;
 import symbol.LocalVariableSymbol;
 import symbol.PrimitiveType;
 import symbol.ScopeSymbol;
 import symbol.Symbol;
 import util.ElementContainer;
 import util.ErrorBag;
-import validator.FunctionValidator;
 import vrjass.vrJASSBaseListener;
 import vrjass.vrJASSParser.FunctionStatementContext;
 import vrjass.vrJASSParser.LibraryBlockStatementContext;
 import vrjass.vrJASSParser.LocalVariableStatementContext;
 import vrjass.vrJASSParser.RequirementListContext;
+import vrjass.vrJASSParser.ReturnStatementContext;
 
-/**
- *
- * @deprecated
- * @author Ruke
- *
- */
 public class RefPhase extends vrJASSBaseListener {
 
 	protected ElementContainer elementContainer;
@@ -61,12 +55,9 @@ public class RefPhase extends vrJASSBaseListener {
 	@Override
 	public void enterFunctionStatement(FunctionStatementContext ctx) {
 		this.symbol = this.elementContainer.getSymbols().get(ctx);
-
-		FunctionValidator validator = new FunctionValidator((FunctionSymbol) this.symbol);
-		validator.check();
-
-		System.out.println(validator.getErrorBag().getMessages());
 	}
+
+
 
 	@Override
 	public void exitFunctionStatement(FunctionStatementContext ctx) {

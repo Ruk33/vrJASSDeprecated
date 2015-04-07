@@ -238,7 +238,7 @@ public class DefPhase extends vrJASSBaseListener {
 	@Override
 	public void exitReturnStatement(ReturnStatementContext ctx) {
 		Expression expression = this.elementContainer.getExpressions().get(ctx.expr());
-		((FunctionSymbol) this.scopeSymbol).defineStatement(new ReturnStatement(expression));
+		((FunctionSymbol) this.scopeSymbol).defineStatement(new ReturnStatement(this.scopeSymbol, expression));
 	}
 
 }

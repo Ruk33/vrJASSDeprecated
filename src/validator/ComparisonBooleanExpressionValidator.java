@@ -1,33 +1,25 @@
 package validator;
 
+import util.Error;
 import expression.ComparisonBooleanExpression;
 import expression.ComparisonBooleanExpression.Operator;
 
-public class ComparisonBooleanExpressionValidator extends Validator {
+public class ComparisonBooleanExpressionValidator extends ElementValidator {
 
-	protected ComparisonBooleanExpression expression;
+	protected ComparisonBooleanExpression element;
 
-	public Validator setExpression(ComparisonBooleanExpression expression) {
-		this.expression = expression;
-		return this;
-	}
-
-	public boolean check() {
-		if (this.expression == null) {
-			return false;
-		}
-
-		Operator operator = this.expression.getOperator();
+	public boolean validate() {
+		Operator operator = this.element.getOperator();
 
 		if (operator != Operator.EQUAL && operator != Operator.NOT_EQUAL) {
-			String aType = this.expression.getExpressionA().getType();
-			boolean aIsNumeric = aType.equals("integer") || aType.equals("integer");
+			String aType = this.element.getExpressionA().getType();
+			boolean aIsNumeric = aType.equals("integer") || aType.equals("real");
 
-			String bType = this.expression.getExpressionB().getType();
-			boolean bIsNumeric = bType.equals("integer") || bType.equals("integer");
+			String bType = this.element.getExpressionB().getType();
+			boolean bIsNumeric = bType.equals("integer") || bType.equals("real");
 
 			if (aIsNumeric == false || bIsNumeric == false) {
-				this.errorBag.add("Operator " + operator.toString() + " can only be used with integers or reals");
+				this.errors.add(Error.createFromToken(this.token, "Operator " + operator.toString() + " can only be used with integers or reals"));
 				return false;
 			}
 		}

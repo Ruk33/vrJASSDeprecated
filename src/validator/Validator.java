@@ -1,26 +1,32 @@
 package validator;
 
-import org.antlr.v4.runtime.ParserRuleContext;
+import java.util.LinkedList;
 
-import statement.Statement;
-import util.ErrorBag;
+import util.Error;
 
-public abstract class Validator {
+public class Validator {
 
-	protected ParserRuleContext ctx;
-	protected Statement statement;
-	protected ErrorBag errorBag;
+	protected LinkedList<ElementValidator> elements = new LinkedList<ElementValidator>();
+	protected LinkedList<Error> errors = new LinkedList<Error>();
 
-	public Validator(ParserRuleContext ctx, Statement statement) {
-		this.ctx = ctx;
-		this.statement = statement;
-		this.errorBag = new ErrorBag();
+	public Validator add(ElementValidator element) {
+		this.elements.add(element);
+		return this;
 	}
 
-	public ErrorBag getErrorBag() {
-		return this.errorBag;
-	}
+	public boolean validateAll() {
+		boolean result = true;
 
-	public abstract boolean check();
+		this.errors.clear();
+
+		for (ElementValidator element : this.elements) {
+			if (!element.isValid()) {
+				this.errors.addAll(element.getErrors());
+				result = false;
+			}
+		}
+
+		return result;
+	}
 
 }

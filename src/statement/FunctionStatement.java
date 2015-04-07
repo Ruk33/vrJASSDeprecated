@@ -12,10 +12,6 @@ public class FunctionStatement implements Statement {
 		this.function = function;
 	}
 
-	public void asd() {
-
-	}
-
 	@Override
 	public String toJASS() {
 		String output = "";
@@ -39,6 +35,11 @@ public class FunctionStatement implements Statement {
 		output += "\n" + "endfunction";
 
 		return output;
+	}
+
+	@Override
+	public Symbol getSymbol() {
+		return this.function;
 	}
 
 }

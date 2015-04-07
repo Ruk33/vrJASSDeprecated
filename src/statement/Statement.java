@@ -1,7 +1,14 @@
 package statement;
 
-public interface Statement {
+import symbol.Symbol;
+import vrjass.Element;
 
-	public String toJASS();
-	
+public interface Statement extends Element {
+
+	/**
+	 *
+	 * @return Get symbol where it belongs to
+	 */
+	public Symbol getSymbol();
+
 }

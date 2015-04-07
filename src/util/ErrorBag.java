@@ -3,6 +3,11 @@ package util;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * @deprecated Use LinkedList<Error> instead
+ * @author Ruke
+ *
+ */
 public class ErrorBag {
 
 	protected LinkedList<String> messages = new LinkedList<String>();
