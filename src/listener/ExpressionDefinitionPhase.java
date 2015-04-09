@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import expression.ABExpression;
+import expression.AndExpression;
 import expression.BooleanExpression;
 import expression.ComparisonBooleanExpression;
 import expression.Expression;
@@ -12,6 +13,7 @@ import expression.FunctionExpression;
 import expression.IntegerExpression;
 import expression.MathExpression;
 import expression.NullExpression;
+import expression.OrExpression;
 import expression.ParenthesisExpression;
 import expression.StringExpression;
 import expression.VariableExpression;
@@ -26,12 +28,14 @@ import symbol.Symbol;
 import symbol.VariableSymbol;
 import util.UndefinedSymbolResolver;
 import vrjass.vrJASSBaseListener;
+import vrjass.vrJASSParser.AndExpressionContext;
 import vrjass.vrJASSParser.BooleanExpressionContext;
 import vrjass.vrJASSParser.ComparisonExpressionContext;
 import vrjass.vrJASSParser.IgnoreFunctionExpressionContext;
 import vrjass.vrJASSParser.IntegerExpressionContext;
 import vrjass.vrJASSParser.MathExpressionContext;
 import vrjass.vrJASSParser.NullExpressionContext;
+import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.ParenthesisExpressionContext;
 import vrjass.vrJASSParser.RealExpressionContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
@@ -165,6 +169,30 @@ public class ExpressionDefinitionPhase extends vrJASSBaseListener {
 
 		this.getStatements().put(ctx, statement);
 		((FunctionSymbol) scopeSymbol).defineStatement(statement);
+	}
+
+	@Override
+	public void exitOrExpression(OrExpressionContext ctx) {
+		Expression a = this.getExpressions().get(ctx.expr(0));
+		Expression b = this.getExpressions().get(ctx.expr(1));
+
+		OrExpression expression = new OrExpression();
+		expression.setExpressionA(a);
+		expression.setExpressionB(b);
+
+		this.getExpressions().put(ctx, expression);
+	}
+
+	@Override
+	public void exitAndExpression(AndExpressionContext ctx) {
+		Expression a = this.getExpressions().get(ctx.expr(0));
+		Expression b = this.getExpressions().get(ctx.expr(1));
+
+		AndExpression expression = new AndExpression();
+		expression.setExpressionA(a);
+		expression.setExpressionB(b);
+
+		this.getExpressions().put(ctx, expression);
 	}
 
 	@Override

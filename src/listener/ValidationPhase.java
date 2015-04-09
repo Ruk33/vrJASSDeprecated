@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import expression.ABExpression;
 import expression.FunctionExpression;
 import expression.MathExpression;
 import expression.VariableExpression;
@@ -12,14 +13,17 @@ import symbol.PrimitiveType;
 import symbol.Symbol;
 import util.ElementContainer;
 import util.Error;
+import validator.AndOrExpressionValidator;
 import validator.FunctionExpressionValidator;
 import validator.FunctionReturnStatementValidator;
 import validator.MathExpressionValidator;
 import validator.Validator;
 import validator.VariableExpressionValidator;
 import vrjass.vrJASSBaseListener;
+import vrjass.vrJASSParser.AndExpressionContext;
 import vrjass.vrJASSParser.IgnoreFunctionExpressionContext;
 import vrjass.vrJASSParser.MathExpressionContext;
+import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.RequirementListContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
 import vrjass.vrJASSParser.VariableExpressionContext;
@@ -61,6 +65,18 @@ public class ValidationPhase extends vrJASSBaseListener {
 	@Override
 	public void exitReturnStatement(ReturnStatementContext ctx) {
 		this.validator.add(new FunctionReturnStatementValidator((ReturnStatement) this.elementContainer.getStatements().get(ctx), ctx.expr().getStart()));
+	}
+
+	@Override
+	public void exitOrExpression(OrExpressionContext ctx) {
+		ABExpression expression = (ABExpression) this.elementContainer.getExpressions().get(ctx);
+		this.validator.add(new AndOrExpressionValidator(expression, ctx.getStart()));
+	}
+
+	@Override
+	public void exitAndExpression(AndExpressionContext ctx) {
+		ABExpression expression = (ABExpression) this.elementContainer.getExpressions().get(ctx);
+		this.validator.add(new AndOrExpressionValidator(expression, ctx.getStart()));
 	}
 
 	@Override

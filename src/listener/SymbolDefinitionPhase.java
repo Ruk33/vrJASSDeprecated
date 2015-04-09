@@ -14,11 +14,13 @@ import symbol.ScopeSymbol;
 import symbol.Visibility;
 import util.ElementContainer;
 import vrjass.vrJASSBaseListener;
+import vrjass.vrJASSParser.AndExpressionContext;
 import vrjass.vrJASSParser.FunctionStatementContext;
 import vrjass.vrJASSParser.IgnoreFunctionExpressionContext;
 import vrjass.vrJASSParser.LibraryBlockStatementContext;
 import vrjass.vrJASSParser.LocalVariableArrayStatementContext;
 import vrjass.vrJASSParser.LocalVariableStatementContext;
+import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.RequirementListContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
 import vrjass.vrJASSParser.TypeArgumentContext;
@@ -149,6 +151,16 @@ public class SymbolDefinitionPhase extends vrJASSBaseListener {
 
 	@Override
 	public void exitReturnStatement(ReturnStatementContext ctx) {
+		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
+	}
+
+	@Override
+	public void exitOrExpression(OrExpressionContext ctx) {
+		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
+	}
+
+	@Override
+	public void exitAndExpression(AndExpressionContext ctx) {
 		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
 	}
 

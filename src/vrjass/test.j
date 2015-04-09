@@ -4,8 +4,12 @@ library c
 	endfunction
 endlibrary
 library a
+	function pocho takes nothing returns boolean
+		return false
+	endfunction
+
 	function _foo takes nothing returns boolean
-		return true
+		return true or pocho()
 	endfunction	
 endlibrary
 library b
