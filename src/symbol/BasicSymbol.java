@@ -12,7 +12,7 @@ public abstract class BasicSymbol implements Symbol {
 	protected PrimitiveType primitiveType;
 	protected Visibility visibility;
 	protected Symbol parent;
-	protected HashMap<String, LinkedList<Symbol>> childs;
+	protected HashMap<String, Symbol> childs;
 
 	public BasicSymbol(String name, String type, PrimitiveType primitiveType, Visibility visibility, Symbol parent) {
 		this.name = name;
@@ -20,7 +20,7 @@ public abstract class BasicSymbol implements Symbol {
 		this.primitiveType = primitiveType;
 		this.visibility = visibility;
 		this.parent = parent;
-		this.childs = new HashMap<String, LinkedList<Symbol>>();
+		this.childs = new HashMap<String, Symbol>();
 
 		if (this.parent != null) {
 			this.parent.define(this);
@@ -75,27 +75,13 @@ public abstract class BasicSymbol implements Symbol {
 	}
 
 	@Override
-	public HashMap<String, LinkedList<Symbol>> getChilds() {
+	public HashMap<String, Symbol> getChilds() {
 		return this.childs;
 	}
 
 	@Override
 	public Symbol resolve(String name, PrimitiveType primitiveType) {
-		LinkedList<Symbol> allResolved = this.getChilds().getOrDefault(name, new LinkedList<Symbol>());
-		Symbol resolved = null;
-
-		if (primitiveType == null) {
-			resolved = allResolved.get(0);
-		} else {
-			for (Symbol symbol : allResolved) {
-				if (symbol.getPrimitiveType() == primitiveType) {
-					resolved = symbol;
-					break;
-				}
-			}
-		}
-
-		return resolved;
+		return this.getChilds().get(name);
 	}
 
 	@Override
@@ -112,11 +98,7 @@ public abstract class BasicSymbol implements Symbol {
 	@Override
 	public Symbol define(Symbol symbol) {
 		if (symbol != null) {
-			if (!this.getChilds().containsKey(symbol.getName())) {
-				this.getChilds().put(symbol.getName(), new LinkedList<Symbol>());
-			}
-
-			this.getChilds().get(symbol.getName()).add(symbol);
+			this.getChilds().put(symbol.getName(), symbol);
 		}
 
 		return this;

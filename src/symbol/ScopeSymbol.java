@@ -40,6 +40,7 @@ public abstract class ScopeSymbol extends BasicSymbol {
 				this.globals.add(symbol);
 			}
 		}
+
 		return super.define(symbol);
 	}
 
@@ -48,13 +49,11 @@ public abstract class ScopeSymbol extends BasicSymbol {
 		Symbol resolved = super.resolve(name, primitiveType);
 
 		if (resolved == null) {
-			for (LinkedList<Symbol> childs : this.getChilds().values()) {
-				for (Symbol child : childs) {
-					resolved = child.resolve(name, primitiveType);
+			for (Symbol child : this.getChilds().values()) {
+				resolved = child.resolve(name, primitiveType);
 
-					if (resolved != null) {
-						break;
-					}
+				if (resolved != null) {
+					break;
 				}
 			}
 		}

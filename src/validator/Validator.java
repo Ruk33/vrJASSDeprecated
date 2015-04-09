@@ -14,6 +14,10 @@ public class Validator {
 		return this;
 	}
 
+	public LinkedList<Error> getErrors() {
+		return this.errors;
+	}
+
 	public boolean validateAll() {
 		boolean result = true;
 

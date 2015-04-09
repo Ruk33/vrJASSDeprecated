@@ -2,13 +2,14 @@ package symbol;
 
 public enum PrimitiveType {
 
-	VARIABLE, 
-	CLASS, 
+	VARIABLE,
+	CLASS,
 	INTERFACE,
-	MODULE, 
-	LIBRARY, 
-	METHOD, 
-	ARGUMENT, 
-	FUNCTION
-	
+	MODULE,
+	LIBRARY,
+	METHOD,
+	ARGUMENT,
+	FUNCTION,
+	UNDEFINED
+
 }

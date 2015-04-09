@@ -1,6 +1,7 @@
 package statement;
 
 import symbol.Symbol;
+import expression.EmptyExpression;
 import expression.Expression;
 
 public class ReturnStatement implements Statement {
@@ -11,6 +12,10 @@ public class ReturnStatement implements Statement {
 	public ReturnStatement(Symbol symbol, Expression expression) {
 		this.symbol = symbol;
 		this.expression = expression;
+
+		if (this.expression == null) {
+			this.expression = new EmptyExpression();
+		}
 	}
 
 	public Expression getExpression() {
@@ -19,11 +24,7 @@ public class ReturnStatement implements Statement {
 
 	@Override
 	public String toJASS() {
-		if (this.expression != null) {
-			return "return " + this.expression.toJASS();
-		}
-
-		return "return";
+		return "return " + this.expression.toJASS();
 	}
 
 	@Override

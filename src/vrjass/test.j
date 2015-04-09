@@ -1,5 +1,16 @@
-library a requires b
-	function pepe takes nothing returns boolean
-		return (4*5)+1>(4==(6))
+library c
+	function foo takes nothing returns integer
+		return 1
 	endfunction
 endlibrary
+library a
+	function _foo takes nothing returns boolean
+		return true
+	endfunction	
+endlibrary
+library b
+	function bar takes nothing returns integer
+		   return foo()
+	endfunction
+endlibrary
+

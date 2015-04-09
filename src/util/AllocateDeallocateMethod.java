@@ -30,26 +30,26 @@ public class AllocateDeallocateMethod {
 		this.allocateMethod.setReturnType(this.parent.getType());
 
 		IntegerExpression zeroExpression = new IntegerExpression(0);
-		VariableExpression recycleIndexZero = new VariableExpression(this.recycle, zeroExpression);
+		VariableExpression recycleIndexZero = new VariableExpression(this.recycle, zeroExpression, this.allocateMethod);
 
 		LocalVariableSymbol instanceSymbol = new LocalVariableSymbol("instance", this.parent.getType(), false, this.allocateMethod);
 		LocalVariableStatement instance = new LocalVariableStatement(instanceSymbol, recycleIndexZero);
-		VariableExpression instanceExpression = new VariableExpression(instanceSymbol, null);
+		VariableExpression instanceExpression = new VariableExpression(instanceSymbol, null, this.allocateMethod);
 
 		ComparisonBooleanExpression recycleIsNull = new ComparisonBooleanExpression(Operator.EQUAL);
 		recycleIsNull.setExpressionA(recycleIndexZero);
 		recycleIsNull.setExpressionB(zeroExpression);
 
-		IfStatement ifStatement = new IfStatement(recycleIsNull);
+		IfStatement ifStatement = new IfStatement(this.allocateMethod, recycleIsNull);
 
 		MathExpression instancePlusOne = new MathExpression(Operation.PLUS);
 		instancePlusOne.setExpressionA(instanceExpression);
 		instancePlusOne.setExpressionB(new IntegerExpression(1));
 
-		ifStatement.addThenStatement(new SetVariableStatement(recycleIndexZero, instancePlusOne));
-		ifStatement.addElseStatement(new SetVariableStatement(recycleIndexZero, new VariableExpression(this.recycle, instanceExpression)));
+		ifStatement.addThenStatement(new SetVariableStatement(this.allocateMethod, recycleIndexZero, instancePlusOne));
+		ifStatement.addElseStatement(new SetVariableStatement(this.allocateMethod, recycleIndexZero, new VariableExpression(this.recycle, instanceExpression, this.allocateMethod)));
 
-		ReturnStatement returnStatement = new ReturnStatement(instanceExpression);
+		ReturnStatement returnStatement = new ReturnStatement(this.allocateMethod, instanceExpression);
 
 		this.allocateMethod.defineStatement(instance);
 		this.allocateMethod.defineStatement(ifStatement);

@@ -31,7 +31,7 @@ public class Error {
 	}
 
 	public String toString() {
-		return "[" + this.line + ":" + this.charPosition + "]" + this.message;
+		return "[" + this.line + ":" + (this.charPosition+1) + "] " + this.message;
 	}
 
 }

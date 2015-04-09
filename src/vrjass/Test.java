@@ -1,26 +1,36 @@
 package vrjass;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.LinkedList;
 
-import listener.DefPhase;
-import listener.RefPhase;
+import listener.ExpressionDefinitionPhase;
+import listener.SymbolDefinitionPhase;
+import listener.ValidationPhase;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import util.ErrorBag;
-
 public class Test {
 
 	public static void main(String[] args) {
 		try {
-			InputStream is = new FileInputStream("c:/users/ruke/workspace/vrjass/src/vrjass/test.j");
+			FileReader file = new FileReader("c:/users/ruke/workspace/vrjass/src/vrjass/test.j");
+			BufferedReader reader = new BufferedReader(file);
+			LinkedList<String> lines = new LinkedList<String>();
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				lines.add(line.replace("\t", "    "));
+			}
+
+			file.close();
+			reader.close();
 
 			// create a CharStream that reads from standard input
-			ANTLRInputStream input = new ANTLRInputStream(is);
+			ANTLRInputStream input = new ANTLRInputStream(String.join("\n", lines).trim());
 
 			// create a lexer that feeds off of input CharStream
 			vrJASSLexer lexer = new vrJASSLexer(input);
@@ -36,17 +46,18 @@ public class Test {
 			// Create a generic parse tree walker that can trigger callbacks
 			ParseTreeWalker walker = new ParseTreeWalker();
 
-			DefPhase def = new DefPhase();
+			SymbolDefinitionPhase symbolPhase = new SymbolDefinitionPhase();
+			walker.walk(symbolPhase, tree);
 
-			// Walk the tree created during the parse, trigger callbacks
-			walker.walk(def, tree);
-			def.defineAllDependencies();
+			ExpressionDefinitionPhase exprPhase = new ExpressionDefinitionPhase(symbolPhase);
+			walker.walk(exprPhase, tree);
 
-			ErrorBag errorBag = new ErrorBag();
+			ValidationPhase validationPhase = new ValidationPhase(symbolPhase.getElementContainer());
+			walker.walk(validationPhase, tree);
 
-			walker.walk(new RefPhase(def.getElementContainer(), errorBag), tree);
+			validationPhase.validateAll();
 
-			System.out.println(errorBag.getMessages());
+			System.out.println(validationPhase.getErrors().toString().replace(",", "\n"));
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 		}

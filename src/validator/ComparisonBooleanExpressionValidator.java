@@ -1,5 +1,7 @@
 package validator;
 
+import org.antlr.v4.runtime.Token;
+
 import util.Error;
 import expression.ComparisonBooleanExpression;
 import expression.ComparisonBooleanExpression.Operator;
@@ -7,6 +9,11 @@ import expression.ComparisonBooleanExpression.Operator;
 public class ComparisonBooleanExpressionValidator extends ElementValidator {
 
 	protected ComparisonBooleanExpression element;
+
+	public ComparisonBooleanExpressionValidator(ComparisonBooleanExpression element, Token token) {
+		super(token);
+		this.element = element;
+	}
 
 	public boolean validate() {
 		Operator operator = this.element.getOperator();

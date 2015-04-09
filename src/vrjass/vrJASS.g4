@@ -239,4 +239,4 @@ LOWER_THAN_OR_EQUAL_THAN : '<=';
 INT : [0-9]+;
 EOL : [\r\n]+;
 ID : [a-zA-Z_][a-zA-Z0-9_]*;
-WS : [ \t]+ -> skip;
+WS : [ \t]+ -> channel(HIDDEN);

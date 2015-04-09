@@ -1,11 +1,18 @@
 package validator;
 
+import org.antlr.v4.runtime.Token;
+
 import util.Error;
 import expression.MathExpression;
 
 public class MathExpressionValidator extends ElementValidator {
 
 	protected MathExpression element;
+
+	public MathExpressionValidator(MathExpression element, Token token) {
+		super(token);
+		this.element = element;
+	}
 
 	@Override
 	protected boolean validate() {
