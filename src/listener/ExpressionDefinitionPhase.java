@@ -33,6 +33,7 @@ import vrjass.vrJASSParser.IntegerExpressionContext;
 import vrjass.vrJASSParser.MathExpressionContext;
 import vrjass.vrJASSParser.NullExpressionContext;
 import vrjass.vrJASSParser.ParenthesisExpressionContext;
+import vrjass.vrJASSParser.RealExpressionContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
 import vrjass.vrJASSParser.StringExpressionContext;
 import vrjass.vrJASSParser.VariableArrayExpressionContext;
@@ -175,6 +176,11 @@ public class ExpressionDefinitionPhase extends vrJASSBaseListener {
 	@Override
 	public void enterIntegerExpression(IntegerExpressionContext ctx) {
 		this.getExpressions().put(ctx, new IntegerExpression(ctx.INTEGER().getText()));
+	}
+
+	@Override
+	public void enterRealExpression(RealExpressionContext ctx) {
+		this.getExpressions().put(ctx, new IntegerExpression(ctx.REAL().getText()));
 	}
 
 	@Override

@@ -8,6 +8,10 @@ public class RealExpression implements Expression {
 		this.value = value;
 	}
 
+	public RealExpression(String value) {
+		this.value = Float.valueOf(value);
+	}
+
 	@Override
 	public String toJASS() {
 		return String.valueOf(this.value);
