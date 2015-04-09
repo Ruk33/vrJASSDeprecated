@@ -23,6 +23,7 @@ import vrjass.vrJASSParser.LocalVariableStatementContext;
 import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.RequirementListContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
+import vrjass.vrJASSParser.SetVariableStatementContext;
 import vrjass.vrJASSParser.TypeArgumentContext;
 import vrjass.vrJASSParser.VariableArrayExpressionContext;
 import vrjass.vrJASSParser.VariableExpressionContext;
@@ -151,6 +152,11 @@ public class SymbolDefinitionPhase extends vrJASSBaseListener {
 
 	@Override
 	public void exitReturnStatement(ReturnStatementContext ctx) {
+		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
+	}
+
+	@Override
+	public void exitSetVariableStatement(SetVariableStatementContext ctx) {
 		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
 	}
 

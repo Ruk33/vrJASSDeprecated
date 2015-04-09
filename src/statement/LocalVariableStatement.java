@@ -30,4 +30,8 @@ public class LocalVariableStatement implements Statement {
 		return this.variable;
 	}
 
+	public Expression getExpression() {
+		return this.value;
+	}
+
 }

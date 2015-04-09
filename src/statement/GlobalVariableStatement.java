@@ -30,4 +30,9 @@ public class GlobalVariableStatement implements Statement {
 		return this.variable;
 	}
 
+	@Override
+	public Expression getExpression() {
+		return this.value;
+	}
+
 }

@@ -26,6 +26,7 @@ import vrjass.vrJASSParser.MathExpressionContext;
 import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.RequirementListContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
+import vrjass.vrJASSParser.SetVariableStatementContext;
 import vrjass.vrJASSParser.VariableExpressionContext;
 
 public class ValidationPhase extends vrJASSBaseListener {
@@ -87,6 +88,11 @@ public class ValidationPhase extends vrJASSBaseListener {
 	@Override
 	public void exitMathExpression(MathExpressionContext ctx) {
 		this.validator.add(new MathExpressionValidator((MathExpression) this.elementContainer.getExpressions().get(ctx), ctx.getStart()));
+	}
+
+	@Override
+	public void exitSetVariableStatement(SetVariableStatementContext ctx) {
+		this.validator.add(new VariableExpressionValidator((VariableExpression) this.elementContainer.getExpressions().get(ctx), ctx.getStart()));
 	}
 
 }

@@ -2,6 +2,9 @@ package symbol;
 
 import java.util.LinkedList;
 
+import expression.VariableExpression;
+import statement.LocalVariableStatement;
+import statement.SetVariableStatement;
 import statement.Statement;
 
 public abstract class ScopeSymbol extends BasicSymbol {
@@ -21,7 +24,21 @@ public abstract class ScopeSymbol extends BasicSymbol {
 	}
 
 	public Symbol defineStatement(Statement statement) {
+		// JASS only allows local variable definitions at the beggining of
+		// the block, but we're on vrJASS and we allow it anywhere _/m/
+		if (statement instanceof LocalVariableStatement) {
+			// So, local definition at the top
+			this.statements.addFirst(statement);
+
+			statement = new SetVariableStatement(
+				this,
+				(VariableExpression) statement.getSymbol(),
+				((LocalVariableStatement) statement).getExpression()
+			);
+		}
+
 		this.statements.add(statement);
+
 		return this;
 	}
 

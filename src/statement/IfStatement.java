@@ -55,4 +55,9 @@ public class IfStatement implements Statement {
 		return this.symbol;
 	}
 
+	@Override
+	public Expression getExpression() {
+		return this.expression;
+	}
+
 }

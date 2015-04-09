@@ -2,6 +2,7 @@ package statement;
 
 import java.util.LinkedList;
 
+import expression.Expression;
 import symbol.Symbol;
 
 public class GlobalBlockStatement implements Statement {
@@ -28,6 +29,11 @@ public class GlobalBlockStatement implements Statement {
 
 	@Override
 	public Symbol getSymbol() {
+		return null;
+	}
+
+	@Override
+	public Expression getExpression() {
 		return null;
 	}
 

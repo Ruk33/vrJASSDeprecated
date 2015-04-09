@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.LinkedList;
 
-import listener.ExpressionDefinitionPhase;
+import listener.StatementExpressionDefinitionPhase;
 import listener.SymbolDefinitionPhase;
 import listener.ValidationPhase;
 
@@ -29,35 +29,31 @@ public class Test {
 			file.close();
 			reader.close();
 
-			// create a CharStream that reads from standard input
+			// Dark magic begins
 			ANTLRInputStream input = new ANTLRInputStream(String.join("\n", lines).trim());
-
-			// create a lexer that feeds off of input CharStream
 			vrJASSLexer lexer = new vrJASSLexer(input);
-
-			// create a buffer of tokens pulled from the lexer
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-			// create a parser that feeds off the tokens buffer
 			vrJASSParser parser = new vrJASSParser(tokens);
 
 			ParseTree tree = parser.init(); // begin parsing at init rule
 
-			// Create a generic parse tree walker that can trigger callbacks
 			ParseTreeWalker walker = new ParseTreeWalker();
 
 			SymbolDefinitionPhase symbolPhase = new SymbolDefinitionPhase();
 			walker.walk(symbolPhase, tree);
 
-			ExpressionDefinitionPhase exprPhase = new ExpressionDefinitionPhase(symbolPhase);
-			walker.walk(exprPhase, tree);
+			StatementExpressionDefinitionPhase statExprPhase = new StatementExpressionDefinitionPhase(symbolPhase);
+			walker.walk(statExprPhase, tree);
 
 			ValidationPhase validationPhase = new ValidationPhase(symbolPhase.getElementContainer());
 			walker.walk(validationPhase, tree);
 
-			validationPhase.validateAll();
-
-			System.out.println(validationPhase.getErrors().toString().replace(",", "\n"));
+			if (validationPhase.validateAll()) {
+				// order functions depending on calls
+				// print translated jass code
+			} else {
+				System.out.println(validationPhase.getErrors().toString().replace(",", "\n"));
+			}
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 		}

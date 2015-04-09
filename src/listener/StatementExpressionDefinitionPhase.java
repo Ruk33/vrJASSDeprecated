@@ -20,6 +20,7 @@ import expression.VariableExpression;
 import expression.ComparisonBooleanExpression.Operator;
 import expression.MathExpression.Operation;
 import statement.ReturnStatement;
+import statement.SetVariableStatement;
 import statement.Statement;
 import symbol.FunctionSymbol;
 import symbol.PrimitiveType;
@@ -39,16 +40,17 @@ import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.ParenthesisExpressionContext;
 import vrjass.vrJASSParser.RealExpressionContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
+import vrjass.vrJASSParser.SetVariableStatementContext;
 import vrjass.vrJASSParser.StringExpressionContext;
 import vrjass.vrJASSParser.VariableArrayExpressionContext;
 import vrjass.vrJASSParser.VariableExpressionContext;
 
-public class ExpressionDefinitionPhase extends vrJASSBaseListener {
+public class StatementExpressionDefinitionPhase extends vrJASSBaseListener {
 
 	protected SymbolDefinitionPhase symbolDefPhase;
 	protected UndefinedSymbolResolver undefinedSymbolResolver;
 
-	public ExpressionDefinitionPhase(SymbolDefinitionPhase symbolDefPhase) {
+	public StatementExpressionDefinitionPhase(SymbolDefinitionPhase symbolDefPhase) {
 		this.symbolDefPhase = symbolDefPhase;
 		this.undefinedSymbolResolver = new UndefinedSymbolResolver();
 
@@ -224,6 +226,20 @@ public class ExpressionDefinitionPhase extends vrJASSBaseListener {
 	@Override
 	public void enterNullExpression(NullExpressionContext ctx) {
 		this.getExpressions().put(ctx, new NullExpression());
+	}
+
+	@Override
+	public void exitSetVariableStatement(SetVariableStatementContext ctx) {
+		ScopeSymbol symbol = this.getScopeSymbol(ctx);
+		VariableSymbol variableSymbol = (VariableSymbol) this.undefinedSymbolResolver.resolve(symbol, ctx.ID().getText(), PrimitiveType.VARIABLE);
+		VariableExpression variableExpression = new VariableExpression(variableSymbol, null, symbol);
+		Expression expression = this.getExpressions().get(ctx.expr());
+		SetVariableStatement statement = new SetVariableStatement(symbol, variableExpression, expression);
+
+		this.getStatements().put(ctx, statement);
+		this.getExpressions().put(ctx, variableExpression);
+
+		symbol.defineStatement(statement);
 	}
 
 }

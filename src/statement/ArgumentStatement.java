@@ -1,5 +1,6 @@
 package statement;
 
+import expression.Expression;
 import symbol.ArgumentSymbol;
 import symbol.Symbol;
 
@@ -19,6 +20,11 @@ public class ArgumentStatement implements Statement {
 	@Override
 	public Symbol getSymbol() {
 		return this.argument;
+	}
+
+	@Override
+	public Expression getExpression() {
+		return null;
 	}
 
 }

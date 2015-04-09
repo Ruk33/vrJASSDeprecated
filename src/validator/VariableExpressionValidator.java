@@ -22,7 +22,7 @@ public class VariableExpressionValidator extends ElementValidator {
 		Symbol symbolUsingVariableSymbol = this.element.getSymbolUsingIt();
 
 		if (variableSymbol instanceof UndefinedSymbol) {
-			this.errors.add(Error.createFromToken(this.token, "Variable " + this.element.getSymbol().getName() + " is not defined."));
+			this.errors.add(Error.createFromToken(this.token, "Variable " + this.element.getSymbol().getName() + " is not defined"));
 			return false;
 		}
 

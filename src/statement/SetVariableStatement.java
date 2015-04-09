@@ -26,4 +26,9 @@ public class SetVariableStatement implements Statement {
 		return this.symbol;
 	}
 
+	@Override
+	public Expression getExpression() {
+		return this.value;
+	}
+
 }

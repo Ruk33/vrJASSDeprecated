@@ -1,5 +1,6 @@
 package statement;
 
+import expression.Expression;
 import symbol.ArgumentSymbol;
 import symbol.FunctionSymbol;
 import symbol.Symbol;
@@ -40,6 +41,11 @@ public class FunctionStatement implements Statement {
 	@Override
 	public Symbol getSymbol() {
 		return this.function;
+	}
+
+	@Override
+	public Expression getExpression() {
+		return null;
 	}
 
 }
