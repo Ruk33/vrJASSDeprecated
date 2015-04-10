@@ -5,29 +5,28 @@ import java.util.LinkedList;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import expression.ABExpression;
-import expression.FunctionExpression;
 import expression.MathExpression;
 import expression.VariableExpression;
 import statement.ReturnStatement;
+import statement.SetVariableStatement;
 import symbol.PrimitiveType;
 import symbol.Symbol;
 import util.ElementContainer;
 import util.Error;
 import validator.AndOrExpressionValidator;
-import validator.FunctionExpressionValidator;
 import validator.FunctionReturnStatementValidator;
 import validator.MathExpressionValidator;
+import validator.SetVariableStatementValidator;
 import validator.Validator;
 import validator.VariableExpressionValidator;
 import vrjass.vrJASSBaseListener;
 import vrjass.vrJASSParser.AndExpressionContext;
-import vrjass.vrJASSParser.IgnoreFunctionExpressionContext;
+import vrjass.vrJASSParser.LocalVariableStatementContext;
 import vrjass.vrJASSParser.MathExpressionContext;
 import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.RequirementListContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
 import vrjass.vrJASSParser.SetVariableStatementContext;
-import vrjass.vrJASSParser.VariableExpressionContext;
 
 public class ValidationPhase extends vrJASSBaseListener {
 
@@ -59,11 +58,6 @@ public class ValidationPhase extends vrJASSBaseListener {
 	}
 
 	@Override
-	public void exitIgnoreFunctionExpression(IgnoreFunctionExpressionContext ctx) {
-		this.validator.add(new FunctionExpressionValidator((FunctionExpression) this.elementContainer.getExpressions().get(ctx), ctx.getStart()));
-	}
-
-	@Override
 	public void exitReturnStatement(ReturnStatementContext ctx) {
 		this.validator.add(new FunctionReturnStatementValidator((ReturnStatement) this.elementContainer.getStatements().get(ctx), ctx.expr().getStart()));
 	}
@@ -81,18 +75,21 @@ public class ValidationPhase extends vrJASSBaseListener {
 	}
 
 	@Override
-	public void enterVariableExpression(VariableExpressionContext ctx) {
-		this.validator.add(new VariableExpressionValidator((VariableExpression) this.elementContainer.getExpressions().get(ctx), ctx.getStart()));
-	}
-
-	@Override
 	public void exitMathExpression(MathExpressionContext ctx) {
 		this.validator.add(new MathExpressionValidator((MathExpression) this.elementContainer.getExpressions().get(ctx), ctx.getStart()));
 	}
 
 	@Override
 	public void exitSetVariableStatement(SetVariableStatementContext ctx) {
-		this.validator.add(new VariableExpressionValidator((VariableExpression) this.elementContainer.getExpressions().get(ctx), ctx.getStart()));
+		this.validator.add(new VariableExpressionValidator((VariableExpression) this.elementContainer.getExpressions().get(ctx.expr(0)), ctx.getStart()));
+		this.validator.add(new SetVariableStatementValidator((SetVariableStatement) this.elementContainer.getStatements().get(ctx), ctx.getStart()));
+	}
+
+	@Override
+	public void exitLocalVariableStatement(LocalVariableStatementContext ctx) {
+		if (ctx.variableStatement().expr() != null) {
+			this.validator.add(new VariableExpressionValidator((VariableExpression) this.elementContainer.getExpressions().get(ctx), ctx.getStart()));
+		}
 	}
 
 }

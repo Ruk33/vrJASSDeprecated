@@ -38,11 +38,10 @@ expr:	expr (MULT|DIV|PLUS|MINUS) expr #mathExpression
 	|	'(' expr ')' #parenthesisExpression
 	|	expr OR expr #orExpression
 	|	expr AND expr #andExpression
-	|	(THIS|THISTYPE|ID) #variableExpression
-	|	ID '[' expr ']' #variableArrayExpression
-	|	expr DOT ID #propertyExpression
-	|	functionExpression #ignoreFunctionExpression
-	|	methodExpression #ignoreMethodExpression
+	|	expr '[' expr ']' #variableArrayExpression
+	|	expr DOT expr #structMemberExpression
+	|	expr argList #functionMethodExpression
+	|	(ID|THIS|THISTYPE) #name
 	;
 
 exprList : expr (',' expr)*;
@@ -72,7 +71,7 @@ variableStatement: variableType ID ('=' expr)?;
 globalVariableStatement: nonePublicPrivateVisibility (CONSTANT)? variableStatement;
 localVariableArrayStatement: LOCAL variableType ARRAY ID;
 localVariableStatement: LOCAL variableStatement;
-setVariableStatement: SET ID '=' expr;
+setVariableStatement: SET expr '=' expr;
 
 propertyVisibility: (PUBLIC | PRIVATE | READONLY)?;
 propertyStatement: propertyVisibility (STATIC)? (CONSTANT)? variableStatement;

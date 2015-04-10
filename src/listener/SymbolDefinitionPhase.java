@@ -16,17 +16,16 @@ import util.ElementContainer;
 import vrjass.vrJASSBaseListener;
 import vrjass.vrJASSParser.AndExpressionContext;
 import vrjass.vrJASSParser.FunctionStatementContext;
-import vrjass.vrJASSParser.IgnoreFunctionExpressionContext;
 import vrjass.vrJASSParser.LibraryBlockStatementContext;
 import vrjass.vrJASSParser.LocalVariableArrayStatementContext;
 import vrjass.vrJASSParser.LocalVariableStatementContext;
+import vrjass.vrJASSParser.NameContext;
 import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.RequirementListContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
 import vrjass.vrJASSParser.SetVariableStatementContext;
 import vrjass.vrJASSParser.TypeArgumentContext;
 import vrjass.vrJASSParser.VariableArrayExpressionContext;
-import vrjass.vrJASSParser.VariableExpressionContext;
 
 public class SymbolDefinitionPhase extends vrJASSBaseListener {
 
@@ -122,10 +121,15 @@ public class SymbolDefinitionPhase extends vrJASSBaseListener {
 
 	@Override
 	public void enterLocalVariableStatement(LocalVariableStatementContext ctx) {
-		String name = ctx.variableStatement().getText();
+		String name = ctx.variableStatement().ID().getText();
 		String type = ctx.variableStatement().variableType().getText();
 
-		this.elementContainer.getSymbols().put(ctx, new LocalVariableSymbol(name, type, false, this.scopeSymbol));
+		new LocalVariableSymbol(name, type, false, this.scopeSymbol);
+	}
+
+	@Override
+	public void exitLocalVariableStatement(LocalVariableStatementContext ctx) {
+		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
 	}
 
 	@Override
@@ -133,20 +137,11 @@ public class SymbolDefinitionPhase extends vrJASSBaseListener {
 		String name = ctx.ID().getText();
 		String type = ctx.variableType().getText();
 
-		this.elementContainer.getSymbols().put(ctx, new LocalVariableSymbol(name, type, true, this.scopeSymbol));
-	}
-
-	public void enterVariableExpression(VariableExpressionContext ctx) {
-		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
+		new LocalVariableSymbol(name, type, true, this.scopeSymbol);
 	}
 
 	@Override
 	public void exitVariableArrayExpression(VariableArrayExpressionContext ctx) {
-		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
-	}
-
-	@Override
-	public void exitIgnoreFunctionExpression(IgnoreFunctionExpressionContext ctx) {
 		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
 	}
 
@@ -167,6 +162,11 @@ public class SymbolDefinitionPhase extends vrJASSBaseListener {
 
 	@Override
 	public void exitAndExpression(AndExpressionContext ctx) {
+		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
+	}
+
+	@Override
+	public void enterName(NameContext ctx) {
 		this.elementContainer.getSymbols().put(ctx, this.scopeSymbol);
 	}
 

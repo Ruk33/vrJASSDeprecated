@@ -113,6 +113,18 @@ public class vrJASSBaseListener implements vrJASSListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunctionMethodExpression(vrJASSParser.FunctionMethodExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionMethodExpression(vrJASSParser.FunctionMethodExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParenthesisExpression(vrJASSParser.ParenthesisExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -149,18 +161,6 @@ public class vrJASSBaseListener implements vrJASSListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIgnoreFunctionExpression(vrJASSParser.IgnoreFunctionExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIgnoreFunctionExpression(vrJASSParser.IgnoreFunctionExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterBooleanExpression(vrJASSParser.BooleanExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -180,18 +180,6 @@ public class vrJASSBaseListener implements vrJASSListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIntegerExpression(vrJASSParser.IntegerExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVariableExpression(vrJASSParser.VariableExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVariableExpression(vrJASSParser.VariableExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -233,18 +221,6 @@ public class vrJASSBaseListener implements vrJASSListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIgnoreMethodExpression(vrJASSParser.IgnoreMethodExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIgnoreMethodExpression(vrJASSParser.IgnoreMethodExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNullExpression(vrJASSParser.NullExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -252,6 +228,18 @@ public class vrJASSBaseListener implements vrJASSListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNullExpression(vrJASSParser.NullExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterName(vrJASSParser.NameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitName(vrJASSParser.NameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -281,13 +269,13 @@ public class vrJASSBaseListener implements vrJASSListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPropertyExpression(vrJASSParser.PropertyExpressionContext ctx) { }
+	@Override public void enterStructMemberExpression(vrJASSParser.StructMemberExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPropertyExpression(vrJASSParser.PropertyExpressionContext ctx) { }
+	@Override public void exitStructMemberExpression(vrJASSParser.StructMemberExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

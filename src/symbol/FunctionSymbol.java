@@ -37,16 +37,6 @@ public class FunctionSymbol extends ScopeSymbol {
 		return super.defineStatement(statement);
 	}
 
-	@Override
-	public Symbol define(Symbol symbol) {
-		if (symbol instanceof ArgumentSymbol) {
-			this.arguments.add(symbol);
-			return super.define(symbol);
-		}
-
-		return this;
-	}
-
 	public LinkedList<Symbol> getArguments() {
 		return this.arguments;
 	}

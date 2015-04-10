@@ -1,15 +1,15 @@
 package statement;
 
 import expression.Expression;
-import symbol.LocalVariableSymbol;
 import symbol.Symbol;
+import symbol.VariableSymbol;
 
 public class LocalVariableStatement implements Statement {
 
-	protected LocalVariableSymbol variable;
+	protected VariableSymbol variable;
 	protected Expression value;
 
-	public LocalVariableStatement(LocalVariableSymbol variable, Expression value) {
+	public LocalVariableStatement(VariableSymbol variable, Expression value) {
 		this.variable = variable;
 		this.value = value;
 	}

@@ -9,16 +9,16 @@ import expression.AndExpression;
 import expression.BooleanExpression;
 import expression.ComparisonBooleanExpression;
 import expression.Expression;
-import expression.FunctionExpression;
 import expression.IntegerExpression;
 import expression.MathExpression;
 import expression.NullExpression;
 import expression.OrExpression;
 import expression.ParenthesisExpression;
 import expression.StringExpression;
-import expression.VariableExpression;
 import expression.ComparisonBooleanExpression.Operator;
 import expression.MathExpression.Operation;
+import expression.VariableExpression;
+import statement.LocalVariableStatement;
 import statement.ReturnStatement;
 import statement.SetVariableStatement;
 import statement.Statement;
@@ -32,9 +32,10 @@ import vrjass.vrJASSBaseListener;
 import vrjass.vrJASSParser.AndExpressionContext;
 import vrjass.vrJASSParser.BooleanExpressionContext;
 import vrjass.vrJASSParser.ComparisonExpressionContext;
-import vrjass.vrJASSParser.IgnoreFunctionExpressionContext;
 import vrjass.vrJASSParser.IntegerExpressionContext;
+import vrjass.vrJASSParser.LocalVariableStatementContext;
 import vrjass.vrJASSParser.MathExpressionContext;
+import vrjass.vrJASSParser.NameContext;
 import vrjass.vrJASSParser.NullExpressionContext;
 import vrjass.vrJASSParser.OrExpressionContext;
 import vrjass.vrJASSParser.ParenthesisExpressionContext;
@@ -42,8 +43,6 @@ import vrjass.vrJASSParser.RealExpressionContext;
 import vrjass.vrJASSParser.ReturnStatementContext;
 import vrjass.vrJASSParser.SetVariableStatementContext;
 import vrjass.vrJASSParser.StringExpressionContext;
-import vrjass.vrJASSParser.VariableArrayExpressionContext;
-import vrjass.vrJASSParser.VariableExpressionContext;
 
 public class StatementExpressionDefinitionPhase extends vrJASSBaseListener {
 
@@ -136,34 +135,6 @@ public class StatementExpressionDefinitionPhase extends vrJASSBaseListener {
 	}
 
 	@Override
-	public void enterVariableExpression(VariableExpressionContext ctx) {
-		String name = ctx.ID().getText();
-		Symbol symbol = this.resolveBackwardsOrUndefined(ctx, name, PrimitiveType.VARIABLE);
-		VariableExpression expression = new VariableExpression((VariableSymbol) symbol, null, this.getScopeSymbol(ctx));
-
-		this.getExpressions().put(ctx, expression);
-	}
-
-	@Override
-	public void exitVariableArrayExpression(VariableArrayExpressionContext ctx) {
-		String name = ctx.ID().getText();
-		Symbol symbol = this.resolveBackwardsOrUndefined(ctx, name, PrimitiveType.VARIABLE);
-		Expression index = this.getExpressions().get(ctx.expr());
-		VariableExpression expression = new VariableExpression((VariableSymbol) symbol, index, this.getScopeSymbol(ctx));
-
-		this.getExpressions().put(ctx, expression);
-	}
-
-	@Override
-	public void exitIgnoreFunctionExpression(IgnoreFunctionExpressionContext ctx) {
-		String name = ctx.functionExpression().ID().getText();
-		Symbol symbol = this.resolveBackwardsOrUndefined(ctx, name, PrimitiveType.FUNCTION);
-		FunctionExpression expression = new FunctionExpression((FunctionSymbol) symbol, this.getScopeSymbol(ctx));
-
-		this.getExpressions().put(ctx, expression);
-	}
-
-	@Override
 	public void exitReturnStatement(ReturnStatementContext ctx) {
 		ScopeSymbol scopeSymbol = this.getScopeSymbol(ctx);
 		Expression expression = this.getExpressions().get(ctx.expr());
@@ -229,17 +200,35 @@ public class StatementExpressionDefinitionPhase extends vrJASSBaseListener {
 	}
 
 	@Override
-	public void exitSetVariableStatement(SetVariableStatementContext ctx) {
+	public void enterName(NameContext ctx) {
 		ScopeSymbol symbol = this.getScopeSymbol(ctx);
-		VariableSymbol variableSymbol = (VariableSymbol) this.undefinedSymbolResolver.resolve(symbol, ctx.ID().getText(), PrimitiveType.VARIABLE);
-		VariableExpression variableExpression = new VariableExpression(variableSymbol, null, symbol);
-		Expression expression = this.getExpressions().get(ctx.expr());
-		SetVariableStatement statement = new SetVariableStatement(symbol, variableExpression, expression);
+		VariableSymbol variable = (VariableSymbol) this.undefinedSymbolResolver.resolveBackwards(symbol, ctx.ID().getText(), PrimitiveType.VARIABLE);
+		VariableExpression expression = new VariableExpression(variable, null, symbol);
 
-		this.getStatements().put(ctx, statement);
-		this.getExpressions().put(ctx, variableExpression);
+		this.getExpressions().put(ctx, expression);
+	}
+
+	@Override
+	public void exitLocalVariableStatement(LocalVariableStatementContext ctx) {
+		ScopeSymbol symbol = this.getScopeSymbol(ctx);
+		String name = ctx.variableStatement().ID().getText();
+		VariableSymbol variableSymbol = (VariableSymbol) this.undefinedSymbolResolver.resolve(symbol, name, PrimitiveType.VARIABLE);
+		Expression expression = this.getExpressions().get(ctx.variableStatement().expr());
+		LocalVariableStatement statement = new LocalVariableStatement(variableSymbol, expression);
 
 		symbol.defineStatement(statement);
+		this.getStatements().put(ctx, statement);
+	}
+
+	@Override
+	public void exitSetVariableStatement(SetVariableStatementContext ctx) {
+		ScopeSymbol symbol = this.getScopeSymbol(ctx);
+		VariableExpression variable = (VariableExpression) this.getExpressions().get(ctx.expr(0));
+		Expression expression = this.getExpressions().get(ctx.expr(1));
+		SetVariableStatement statement = new SetVariableStatement(symbol, variable, expression);
+
+		symbol.defineStatement(statement);
+		this.getStatements().put(ctx, statement);
 	}
 
 }
